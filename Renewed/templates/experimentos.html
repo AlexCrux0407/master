@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experimentos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('index') }}">INICIO</a>
+        <a href="{{ url_for('actividades') }}">ACTIVIDADES</a>
+        <a href="{{ url_for('progreso') }}">PROGRESO</a>
+        <a href="{{ url_for('configuracion') }}">CONFIGURACIÓN</a>
+    </div>
+    <div class="container">
+        <div class="section center">
+            <h2>Experimentos con Materiales Reciclables</h2>
+            <ul class="experimentos-list">
+                <li>
+                    <h3>Experimento 1: Cohete de Botella</h3>
+                    <p>Aprende a construir un cohete usando una botella de plástico reciclada y otros materiales comunes.</p>
+                    <a href="https://www.youtube.com/watch?v=video_id_1" target="_blank">Ver Video</a>
+                    <p>Fuente: [YouTube: Cómo hacer un cohete de botella](https://www.youtube.com/watch?v=video_id_1)</p>
+                </li>
+                <li>
+                    <h3>Experimento 2: Jardín Vertical</h3>
+                    <p>Crea un jardín vertical utilizando botellas de plástico recicladas y otros elementos fáciles de encontrar.</p>
+                    <a href="https://www.youtube.com/watch?v=video_id_2" target="_blank">Ver Video</a>
+                    <p>Fuente: [YouTube: Jardín vertical con botellas recicladas](https://www.youtube.com/watch?v=video_id_2)</p>
+                </li>
+                <li>
+                    <h3>Experimento 3: Banco de Energía Solar</h3>
+                    <p>Construye un banco de energía solar usando componentes reciclados y aprende sobre energía renovable.</p>
+                    <a href="https://www.youtube.com/watch?v=video_id_3" target="_blank">Ver Video</a>
+                    <p>Fuente: [YouTube: Banco de energía solar con materiales reciclados](https://www.youtube.com/watch?v=video_id_3)</p>
+                </li>
+            </ul>
+            <div class="image-container small-margin">
+                <img src="{{ url_for('static', filename='images/mascota-tortuga.png') }}" alt="Mascota Tortuga">
+            </div>
+            <a href="{{ url_for('index') }}" class="back-link">Volver al Menú Principal</a>
+        </div>
+    </div>
+</body>
+</html>

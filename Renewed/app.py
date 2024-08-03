@@ -87,6 +87,19 @@ questions = [
     }
 ]
 
+# Función para obtener metas aleatorias
+def obtener_metas_aleatorias(user_id):
+    cursor = mysql.connection.cursor()
+    cursor.execute("""
+        SELECT id, nombre, descripcion, beneficio_estimado 
+        FROM metas 
+        WHERE id NOT IN (SELECT meta_id FROM metas_completadas WHERE usuario_id = %s)
+        ORDER BY RAND() LIMIT 5
+    """, (user_id,))
+    metas = cursor.fetchall()
+    cursor.close()
+    return metas
+
 @app.route('/')
 def index():
     if 'username' not in session:
@@ -199,37 +212,11 @@ def logros():
         return redirect(url_for('login'))
     return render_template('logros.html')
 
-@app.route('/videos')
-def videos():
-    if 'username' not in session:
-        return redirect(url_for('login'))
-    return render_template('videos.html')
-
-@app.route('/guardar_progreso', methods=['POST'])
-def guardar_progreso():
-    if 'username' not in session:
-        return redirect(url_for('login'))
-    user_id = session['user_id']
-    puntos = request.form['puntos']
-    cursor = mysql.connection.cursor()
-    cursor.execute('INSERT INTO progresos (id_usuario, puntos) VALUES (%s, %s)', (user_id, puntos))
-    mysql.connection.commit()
-    cursor.close()
-    return jsonify({'success': True})
-
-@app.route('/siguiente_pregunta/<int:index>', methods=['GET'])
-def siguiente_pregunta(index):
-    if index < len(questions):
-        return jsonify(questions[index])
-    else:
-        return jsonify({'completed': True})
-    
 @app.route('/estadisticas')
 def estadisticas():
     if 'username' not in session:
-        flash('Por favor inicia sesión primero', 'danger')
         return redirect(url_for('login'))
-
+    
     cursor = mysql.connection.cursor()
     query = """
     SELECT a.nombre AS nombre_actividad, p.cantidad AS puntos 
@@ -245,6 +232,59 @@ def estadisticas():
     cursor.close()
 
     return render_template('estadisticas.html', stats=stats)
+
+@app.route('/metas', methods=['GET', 'POST'])
+def metas():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    
+    user_id = session['user_id']
+    metas = obtener_metas_aleatorias(user_id)
+    
+    return render_template('metas.html', metas=metas)
+
+@app.route('/completar_meta/<int:meta_id>', methods=['POST'])
+def completar_meta(meta_id):
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    
+    user_id = session['user_id']
+    cursor = mysql.connection.cursor()
+    
+    # Verificar si la meta ya fue completada
+    cursor.execute("SELECT * FROM metas_completadas WHERE usuario_id = %s AND meta_id = %s", (user_id, meta_id))
+    meta_completada = cursor.fetchone()
+    
+    if not meta_completada:
+        # Marcar meta como completada y actualizar puntos
+        cursor.execute("INSERT INTO metas_completadas (usuario_id, meta_id) VALUES (%s, %s)", (user_id, meta_id))
+        cursor.execute("UPDATE usuario SET puntos = puntos + (SELECT beneficio_estimado FROM metas WHERE id = %s) WHERE id = %s", (meta_id, user_id))
+        mysql.connection.commit()
+        flash('Meta completada y puntos actualizados', 'success')
+    else:
+        flash('Esta meta ya fue completada', 'info')
+    
+    cursor.close()
+    return redirect(url_for('metas'))
+
+@app.route('/actividades_completadas')
+def actividades_completadas():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    return render_template('actividades_completadas.html')
+
+@app.route('/ranking')
+def ranking():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    return render_template('ranking.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('user_id', None)
+    session.pop('username', None)
+    flash('Cierre de sesión exitoso', 'success')
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True)

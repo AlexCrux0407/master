@@ -175,3 +175,33 @@ body {
 .stats-table td {
     background-color: #e0f7fa;
 }
+
+
+/*  esto es para la pagina de experimentos  D: */
+
+.experimentos-list {
+    list-style-type: none;
+    padding: 0;
+}
+.experimentos-list li {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #e0f7fa;
+    border: 1px solid #00796b;
+    border-radius: 5px;
+}
+.experimentos-list h3 {
+    margin-top: 0;
+}
+.experimentos-list a {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #00796b;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.experimentos-list a:hover {
+    background-color: #004d40;
+}
