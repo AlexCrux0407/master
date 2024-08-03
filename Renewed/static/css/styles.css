@@ -154,3 +154,24 @@ body {
 .login-container a:hover, .register-container a:hover {
     color: #004d40;
 }
+/*  esto es para la pagina de estadisticas  D: */
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.stats-table th, .stats-table td {
+    border: 1px solid #00796b;
+    padding: 10px;
+    text-align: left;
+}
+
+.stats-table th {
+    background-color: #00796b;
+    color: white;
+}
+
+.stats-table td {
+    background-color: #e0f7fa;
+}
