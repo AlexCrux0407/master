@@ -8,188 +8,126 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-gauge@3.0.1/dist/chartjs-gauge.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            let currentQuestionIndex = 0;
-            let questions = [];
-            let totalPoints = 0;
-            let wrongAnswers = [];
-            let totalPossiblePoints = 0;
+            let indicePreguntaActual = 0;
+            let preguntas = [];
+            let puntosTotales = 0;
+            let respuestasIncorrectas = [];
+            let puntosPosiblesTotales = 0;
 
-            function loadQuestions() {
+            function cargarPreguntas() {
                 fetch('/questions')
                     .then(response => response.json())
                     .then(data => {
-                        questions = data;
-                        totalPossiblePoints = questions.reduce((acc, question) => acc + question.points, 0);
-                        loadQuestion();
-                    });
+                        preguntas = data;
+                        puntosPosiblesTotales = preguntas.reduce((acc, pregunta) => acc + pregunta.points, 0);
+                        cargarPregunta();
+                    })
+                    .catch(error => console.error('Error al cargar las preguntas:', error));
             }
 
-            function loadQuestion() {
-                const question = questions[currentQuestionIndex];
-                const questionImage = document.getElementById('question-image');
-                const questionText = document.getElementById('question-text');
-                const answersDiv = document.getElementById('answers');
-                const nextButton = document.getElementById('next-button');
+            function cargarPregunta() {
+                const pregunta = preguntas[indicePreguntaActual];
+                const imagenPregunta = document.getElementById('imagen-pregunta');
+                const textoPregunta = document.getElementById('texto-pregunta');
+                const respuestasDiv = document.getElementById('respuestas');
 
-                questionImage.src = `/static/${question.img}`;
-                questionText.textContent = question.question;
-                answersDiv.innerHTML = '';
-                question.answers.forEach((answer, index) => {
-                    const button = document.createElement('button');
-                    button.textContent = answer;
-                    button.onclick = () => checkAnswer(index);
-                    answersDiv.appendChild(button);
-                });
-                nextButton.style.display = 'none';
-            }
-
-            function checkAnswer(selected) {
-                fetch('/check_answer', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ question_index: currentQuestionIndex, selected_answer: selected })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const resultModal = document.getElementById('result-modal');
-                    const resultText = document.getElementById('result-text');
-                    if (data.correct) {
-                        resultText.textContent = '¡Correcto!';
-                        totalPoints += data.points;
-                    } else {
-                        resultText.textContent = `Incorrecto. La respuesta correcta es: ${questions[currentQuestionIndex].answers[data.correct_answer]}`;
-                        wrongAnswers.push(questions[currentQuestionIndex]);
-                    }
-                    resultModal.style.display = 'block';
+                imagenPregunta.src = `/static/${pregunta.img}`;
+                textoPregunta.textContent = pregunta.question;
+                respuestasDiv.innerHTML = '';
+                pregunta.answers.forEach((respuesta, indice) => {
+                    const boton = document.createElement('button');
+                    boton.textContent = respuesta;
+                    boton.onclick = () => verificarRespuesta(indice);
+                    respuestasDiv.appendChild(boton);
                 });
             }
 
-            document.getElementById('close-modal-button').onclick = () => {
-                const resultModal = document.getElementById('result-modal');
-                resultModal.style.display = 'none';
-                currentQuestionIndex++;
-                if (currentQuestionIndex < questions.length) {
-                    loadQuestion();
+            function verificarRespuesta(seleccionada) {
+                const pregunta = preguntas[indicePreguntaActual];
+                const modalResultado = document.getElementById('modal-resultado');
+                const textoResultado = document.getElementById('texto-resultado');
+
+                if (seleccionada === pregunta.correct) {
+                    textoResultado.textContent = '¡Correcto!';
+                    puntosTotales += pregunta.points;
                 } else {
-                    sendSummary();
+                    textoResultado.textContent = `Incorrecto. La respuesta correcta es: ${pregunta.answers[pregunta.correct]}`;
+                    respuestasIncorrectas.push(pregunta);
+                }
+                modalResultado.style.display = 'block';
+            }
+
+            document.getElementById('boton-cerrar-modal').onclick = () => {
+                const modalResultado = document.getElementById('modal-resultado');
+                modalResultado.style.display = 'none';
+                indicePreguntaActual++;
+                if (indicePreguntaActual < preguntas.length) {
+                    cargarPregunta();
+                } else {
+                    enviarResumen();
                 }
             };
 
-            function sendSummary() {
-                fetch('/summary', {
+            function enviarResumen() {
+                const datosResumen = {
+                    puntos_totales: puntosTotales,
+                    respuestas_incorrectas: respuestasIncorrectas,
+                    puntos_posibles_totales: puntosPosiblesTotales
+                };
+
+                console.log("Datos a enviar:", datosResumen); // Imprime los datos para depuración
+
+                fetch('/resumen_quiz', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        total_points: totalPoints,
-                        wrong_answers: wrongAnswers
-                    })
+                    body: JSON.stringify(datosResumen)
                 })
-                .then(response => response.json())
-                .then(data => {
-                    showSummary(data.total_points, data.wrong_answers, data.total_possible_points);
-                });
+                .then(response => response.text())
+                .then(html => {
+                    document.open();
+                    document.write(html);
+                    document.close();
+                })
+                .catch(error => console.error('Error al enviar los datos:', error));
             }
 
-            function showSummary(totalPoints, wrongAnswers, totalPossiblePoints) {
-                const quizContainer = document.getElementById('quiz-container');
-                const summaryContainer = document.getElementById('summary-container');
-                const totalPointsText = document.getElementById('total-points');
-                const wrongAnswersList = document.getElementById('wrong-answers');
-
-                totalPointsText.textContent = `Puntuación total: ${totalPoints}`;
-                wrongAnswersList.innerHTML = '';
-                wrongAnswers.forEach((question, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.innerHTML = `<b>${question.question}</b><br>Respuesta correcta: <span style="color: green;">${question.answers[question.correct]}</span>`;
-                    wrongAnswersList.appendChild(listItem);
-                });
-
-                const image = totalPoints >= (totalPossiblePoints / 2) ? 'bueno.png' : 'malo.png';
-                document.getElementById('result-image').src = `/static/images/${image}`;
-
-                const ctx = document.getElementById('score-gauge').getContext('2d');
-                new Chart(ctx, {
-                    type: 'gauge',
-                    data: {
-                        labels: ['0', `${totalPossiblePoints/2}`, `${totalPossiblePoints}`],
-                        datasets: [{
-                            data: [totalPoints],
-                            value: totalPoints,
-                            minValue: 0,
-                            backgroundColor: ['red', 'yellow', 'green'],
-                            borderWidth: 2
-                        }]
-                    },
-                    options: {
-                        needle: {
-                            radiusPercentage: 2,
-                            widthPercentage: 3.2,
-                            lengthPercentage: 80,
-                            color: 'rgba(0, 0, 0, 1)'
-                        },
-                        valueLabel: {
-                            display: true,
-                            formatter: Math.round
-                        },
-                        plugins: {
-                            tooltip: {
-                                enabled: false
-                            }
-                        }
-                    }
-                });
-
-                quizContainer.style.display = 'none';
-                summaryContainer.style.display = 'block';
-            }
-
-            document.getElementById('start-button').onclick = () => {
-                document.getElementById('welcome').style.display = 'none';
-                document.getElementById('quiz-container').style.display = 'block';
-                loadQuestion();
+            document.getElementById('boton-iniciar').onclick = () => {
+                document.getElementById('bienvenida').style.display = 'none';
+                document.getElementById('contenedor-quiz').style.display = 'block';
+                cargarPregunta();
             };
 
-            document.getElementById('exit-button').onclick = () => {
-                sendSummary();
+            document.getElementById('boton-salir').onclick = () => {
+                enviarResumen();
             };
 
-            loadQuestions();
+            cargarPreguntas();
         });
     </script>
 </head>
 <body>
-    <div id="welcome">
+    <div id="bienvenida">
         <h1>Bienvenido al Quiz</h1>
         <p>Instrucciones: Responde las preguntas para completar el quiz. ¡Buena suerte!</p>
         <img src="/static/images/quiz.png" alt="Quiz" style="width: 300px; height: auto;">
         <p>Este quiz cubre temas importantes sobre el medio ambiente y la conservación. ¡Pon a prueba tus conocimientos y aprende más sobre cómo cuidar nuestro planeta!</p>
-        <button id="start-button" class="center-button">Comenzar</button>
+        <button id="boton-iniciar" class="boton-centro">Comenzar</button>
     </div>
-    <div id="quiz-container" style="display: none;">
-        <img id="question-image" src="/static/images/bienvenidos.png" alt="Pregunta">
-        <p id="question-text"></p>
-        <div id="answers">
+    <div id="contenedor-quiz" style="display: none;">
+        <img id="imagen-pregunta" src="/static/images/bienvenidos.png.png" alt="Pregunta">
+        <p id="texto-pregunta"></p>
+        <div id="respuestas">
             <!-- Aquí se añadirán los botones de respuesta dinámicamente -->
         </div>
-        <button id="exit-button" class="center-button">Salir y ver resumen</button>
+        <button id="boton-salir" class="boton-centro">Salir y ver resumen</button>
     </div>
-    <div id="result-modal" class="modal">
-        <div class="modal-content">
-            <p id="result-text"></p>
-            <button id="close-modal-button">Continuar</button>
+    <div id="modal-resultado" class="modal">
+        <div class="contenido-modal">
+            <p id="texto-resultado"></p>
+            <button id="boton-cerrar-modal">Continuar</button>
         </div>
-    </div>
-    <div id="summary-container" style="display: none;">
-        <h2>Resumen del Quiz</h2>
-        <p id="total-points"></p>
-        <canvas id="score-gauge"></canvas>
-        <h3>Preguntas incorrectas:</h3>
-        <ul id="wrong-answers"></ul>
-        <img id="result-image" alt="Resultado">
     </div>
 </body>
 </html>

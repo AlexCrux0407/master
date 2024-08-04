@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from flask_mysqldb import MySQL
 from werkzeug.security import generate_password_hash, check_password_hash
+import json
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -47,14 +48,14 @@ questions = [
         "question": "¿Cuál de los siguientes animales se encuentran en peligro de extinción?",
         "img": "images/pregunta5.png.png",
         "answers": ["Tigre de Bengala, chimpancé, ajolote, mandril, Oso polar.", "Vaca, caballos, perro doméstico, gato doméstico y oso panda", "Todos los anteriores"],
-        "correct": 2,
+        "correct": 0,
         "points": 100
     },
     {
         "question": "¿Sabes cuántos árboles deben ser talados para producir una tonelada de papel?",
         "img": "images/pregunta6.png.png",
         "answers": ["39 árboles", "150 árboles", "17 árboles"],
-        "correct": 1,
+        "correct": 2,
         "points": 150
     },
     {
@@ -67,7 +68,7 @@ questions = [
     {
         "question": "Este ecosistema se caracteriza por tener árboles altos y densos que forman un dosel cerrado, con una gran variedad de plantas, animales e insectos. Recibe mucha lluvia durante el año, y la humedad es alta. Alberga una biodiversidad increíble, incluyendo especies como jaguares, monos, ranas venenosas. ¿Qué ecosistema es?",
         "img": "images/pregunta8.png.png",
-        "answers": ["Selva", "Desierto", "Tundra"],
+        "answers": ["Selva tropical", "Desierto", "Tundra"],
         "correct": 0,
         "points": 150
     },
@@ -285,6 +286,19 @@ def logout():
     session.pop('username', None)
     flash('Cierre de sesión exitoso', 'success')
     return redirect(url_for('login'))
+
+@app.route('/questions')
+def get_questions():
+    return jsonify(questions)
+
+@app.route('/resumen_quiz', methods=['POST'])
+def resumen_quiz():
+    datos = request.get_json()
+    print("Datos recibidos:", datos)  # Imprime los datos para depuración
+    puntos_totales = datos['puntos_totales']
+    respuestas_incorrectas = datos['respuestas_incorrectas']
+    puntos_posibles_totales = datos['puntos_posibles_totales']
+    return render_template('resumen_quiz.html', puntos_totales=puntos_totales, respuestas_incorrectas=respuestas_incorrectas, puntos_posibles_totales=puntos_posibles_totales)
 
 if __name__ == '__main__':
     app.run(debug=True)
