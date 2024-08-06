@@ -1,27 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historias</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Lecturas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .lectura {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .lectura h2 {
+            margin-top: 0;
+        }
+        .lectura a, .glosario a, .referencias a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+        }
+        .lectura a:hover, .glosario a:hover, .referencias a:hover {
+            background-color: #45a049;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <div class="navbar">
-        <a href="{{ url_for('index') }}">INICIO</a>
-        <a href="{{ url_for('actividades') }}">ACTIVIDADES</a>
-        <a href="{{ url_for('progreso') }}">PROGRESO</a>
-        <a href="{{ url_for('configuracion') }}">CONFIGURACIÓN</a>
-    </div>
     <div class="container">
-        <div class="section center">
-            <h2>Historias</h2>
-            <p>Próximamente tendremos un foro para que todos puedan compartir sus historias y experiencias.</p>
-            <div class="image-container small-margin">
-                <img src="{{ url_for('static', filename='images/mascota-tortuga.png') }}" alt="Mascota Tortuga">
-            </div>
-            <a href="{{ url_for('index') }}" class="back-link">Volver al Menú Principal</a>
+        <h1>Lecturas</h1>
+        {% for lectura in lecturas %}
+        <div class="lectura">
+            <h2>{{ lectura.title }}</h2>
+            <a href="{{ url_for(lectura.page_url) }}" target="_blank">{{ lectura.page_text }}</a>
         </div>
+        {% endfor %}
+        <div class="glosario">
+            <h1>Glosario</h1>
+            <a href="{{ url_for(glosario.page_url) }}" target="_blank">{{ glosario.page_text }}</a>
+        </div>
+        <div class="referencias">
+            <h1>Referencias</h1>
+            <a href="{{ url_for(referencias.page_url) }}" target="_blank">{{ referencias.page_text }}</a>
+        </div>
+        <a href="{{ url_for('index') }}" class="back-link">Volver al Inicio</a>
     </div>
 </body>
 </html>

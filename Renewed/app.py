@@ -112,12 +112,12 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
+
         cursor = mysql.connection.cursor()
         cursor.execute('SELECT * FROM usuario WHERE Nombre = %s', (username,))
         user = cursor.fetchone()
         cursor.close()
-        
+
         if user and check_password_hash(user['contraseña'], password):
             session['user_id'] = user['id']
             session['username'] = user['Nombre']
@@ -150,14 +150,6 @@ def register():
             cursor.close()
     
     return render_template('register.html')
-
-@app.route('/dashboard')
-def dashboard():
-    if 'username' not in session:
-        flash('Por favor inicia sesión primero', 'danger')
-        return redirect(url_for('login'))
-    
-    return render_template('dashboard.html')
 
 @app.route('/actividades')
 def actividades():
@@ -205,7 +197,36 @@ def experimentos():
 def historias():
     if 'username' not in session:
         return redirect(url_for('login'))
-    return render_template('historias.html')
+    
+    lecturas = [
+        {
+            'title': 'Lectura 1: La Aventura de la Energía Renovable',
+            'page_url': 'lectura1',
+            'page_text': 'Ver lectura'
+        },
+        {
+            'title': 'Lectura 2: La Gran Aventura en el Bosque de Verdesueño',
+            'page_url': 'lectura2',
+            'page_text': 'Ver lectura'
+        },
+        {
+            'title': 'Lectura 3: La Misión de los Guardianes del Agua en el Río Amazonas',
+            'page_url': 'lectura3',
+            'page_text': 'Ver lectura'
+        },
+    ]
+    glosario = {
+        'title': 'Glosario',
+        'page_url': 'glosario',
+        'page_text': 'Ver glosario'
+    }
+    referencias = {
+        'title': 'Referencias',
+        'page_url': 'referencias',
+        'page_text': 'Ver referencias'
+    }
+    
+    return render_template('historias.html', lecturas=lecturas, glosario=glosario, referencias=referencias)
 
 @app.route('/logros')
 def logros():
@@ -299,6 +320,49 @@ def resumen_quiz():
     respuestas_incorrectas = datos['respuestas_incorrectas']
     puntos_posibles_totales = datos['puntos_posibles_totales']
     return render_template('resumen_quiz.html', puntos_totales=puntos_totales, respuestas_incorrectas=respuestas_incorrectas, puntos_posibles_totales=puntos_posibles_totales)
+
+@app.route('/lectura1')
+def lectura1():
+    return render_template('lectura1.html')
+
+@app.route('/lectura2')
+def lectura2():
+    return render_template('lectura2.html')
+
+@app.route('/lectura3')
+def lectura3():
+    return render_template('lectura3.html')
+
+@app.route('/glosario')
+def glosario():
+    return render_template('glosario.html')
+
+@app.route('/referencias')
+def referencias():
+    return render_template('referencias.html')
+
+@app.route('/submit_quiz', methods=['POST'])
+def submit_quiz():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+
+    respuestas_usuario = request.form.to_dict()
+    score = 0
+
+    for pregunta_id, respuesta_id in respuestas_usuario.items():
+        cursor = mysql.connection.cursor()
+        cursor.execute("SELECT correcta FROM respuestas WHERE id = %s", (respuesta_id,))
+        es_correcta = cursor.fetchone()['correcta']
+        if es_correcta:
+            score += 10
+
+    cursor.execute("INSERT INTO puntuaciones (usuario_id, cantidad) VALUES (%s, %s) ON DUPLICATE KEY UPDATE cantidad = cantidad + VALUES(cantidad)", (user_id, score))
+    mysql.connection.commit()
+    cursor.close()
+
+    return {'score': score}
 
 if __name__ == '__main__':
     app.run(debug=True)
