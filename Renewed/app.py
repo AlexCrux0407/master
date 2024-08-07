@@ -238,15 +238,12 @@ def logros():
 def estadisticas():
     if 'username' not in session:
         return redirect(url_for('login'))
-    
+
     cursor = mysql.connection.cursor()
     query = """
-    SELECT a.nombre AS nombre_actividad, p.cantidad AS puntos 
-    FROM actividades a 
-    JOIN puntuaciones p ON a.puntuaciones_id = p.id
-    JOIN perfil_actividades pa ON a.id = pa.actividad_id
-    JOIN perfil pf ON pa.Perfil_id = pf.id
-    JOIN usuario u ON pf.usuario_id = u.id
+    SELECT p.cantidad AS puntos, p.contenido AS nombre_actividad 
+    FROM puntuaciones p
+    JOIN usuario u ON p.usuario_id = u.id
     WHERE u.id = %s
     """
     cursor.execute(query, (session['user_id'],))
@@ -254,6 +251,10 @@ def estadisticas():
     cursor.close()
 
     return render_template('estadisticas.html', stats=stats)
+
+
+
+
 
 @app.route('/metas', methods=['GET', 'POST'])
 def metas():
@@ -347,22 +348,20 @@ def submit_quiz():
         return redirect(url_for('login'))
 
     user_id = session['user_id']
+    data = request.get_json()
+    print("Datos recibidos:", data)  # Mensaje de depuración
+    puntos_totales = data['puntos_totales']
 
-    respuestas_usuario = request.form.to_dict()
-    score = 0
-
-    for pregunta_id, respuesta_id in respuestas_usuario.items():
-        cursor = mysql.connection.cursor()
-        cursor.execute("SELECT correcta FROM respuestas WHERE id = %s", (respuesta_id,))
-        es_correcta = cursor.fetchone()['correcta']
-        if es_correcta:
-            score += 10
-
-    cursor.execute("INSERT INTO puntuaciones (usuario_id, cantidad) VALUES (%s, %s) ON DUPLICATE KEY UPDATE cantidad = cantidad + VALUES(cantidad)", (user_id, score))
+    cursor = mysql.connection.cursor()
+    cursor.execute("INSERT INTO puntuaciones (usuario_id, cantidad, contenido) VALUES (%s, %s, %s)", (user_id, puntos_totales, 'quiz'))
     mysql.connection.commit()
     cursor.close()
 
-    return {'score': score}
+    return jsonify({'status': 'success'})
+
+
+
+
 
 
 
