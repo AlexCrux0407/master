@@ -10,14 +10,14 @@ body {
     padding: 10px 20px;
     font-size: 1em;
     cursor: pointer;
-    background-color: #4CAF50;
+    background-color: #00796b;
     color: white;
     border: none;
     border-radius: 5px;
 }
 
 .boton-centro:hover {
-    background-color: #45a049;
+    background-color: #00796b;
 }
 
 #contenedor-quiz {
@@ -49,14 +49,14 @@ body {
     padding: 10px;
     font-size: 1em;
     cursor: pointer;
-    background-color: #4CAF50;
+    background-color: #00796b;
     color: white;
     border: none;
     border-radius: 5px;
 }
 
 #respuestas button:hover {
-    background-color: #45a049;
+    background-color: #00796b;
 }
 
 .modal {
