@@ -30,11 +30,11 @@
             display: inline-block;
             margin-top: 20px;
             text-decoration: none;
-            color: #4CAF50;
+            color: #00796b;
             font-weight: bold;
         }
         .back-link:hover {
-            color: #45a049;
+            color: #00796b;
         }
     </style>
 </head>
@@ -44,7 +44,9 @@
         {% for actividad in actividades %}
         <div class="actividad">
             <h2>{{ actividad.nombre }}</h2>
+            {% if actividad.descripcion %}
             <p>{{ actividad.descripcion }}</p>
+            {% endif %}
             <p><strong>Puntos obtenidos:</strong> {{ actividad.puntos }}</p>
         </div>
         {% endfor %}

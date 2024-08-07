@@ -309,7 +309,28 @@ def completar_meta(meta_id):
 def actividades_completadas():
     if 'username' not in session:
         return redirect(url_for('login'))
-    return render_template('actividades_completadas.html')
+
+    user_id = session['user_id']
+    cursor = mysql.connection.cursor()
+
+    # Obtener actividades completadas (quizzes y metas)
+    query = """
+    SELECT 'Quiz' AS tipo, 'Quiz completado' AS nombre, p.cantidad AS puntos, '' AS descripcion
+    FROM puntuaciones p
+    WHERE p.usuario_id = %s AND p.contenido = 'quiz'
+    UNION ALL
+    SELECT 'Meta' AS tipo, m.nombre AS nombre, p.cantidad AS puntos, m.descripcion AS descripcion
+    FROM puntuaciones p
+    JOIN metas_completadas mc ON p.usuario_id = mc.usuario_id AND p.contenido = 'Meta completada'
+    JOIN metas m ON mc.meta_id = m.id
+    WHERE p.usuario_id = %s
+    """
+    cursor.execute(query, (user_id, user_id))
+    actividades = cursor.fetchall()
+    cursor.close()
+
+    return render_template('actividades_completadas.html', actividades=actividades)
+
 
 @app.route('/ranking')
 def ranking():
