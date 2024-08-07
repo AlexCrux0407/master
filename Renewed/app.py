@@ -260,18 +260,26 @@ def estadisticas():
 def metas():
     if 'username' not in session:
         return redirect(url_for('login'))
-    
+
     user_id = session['user_id']
-    metas = obtener_metas_aleatorias(user_id)
-    
+    cursor = mysql.connection.cursor()
+    cursor.execute("""
+        SELECT * FROM metas 
+        WHERE id NOT IN (SELECT meta_id FROM metas_completadas WHERE usuario_id = %s)
+    """, (user_id,))
+    metas = cursor.fetchall()
+    cursor.close()
+
     return render_template('metas.html', metas=metas)
+
 
 @app.route('/completar_meta/<int:meta_id>', methods=['POST'])
 def completar_meta(meta_id):
     if 'username' not in session:
         return redirect(url_for('login'))
-    
+
     user_id = session['user_id']
+
     cursor = mysql.connection.cursor()
     
     # Verificar si la meta ya fue completada
@@ -279,9 +287,15 @@ def completar_meta(meta_id):
     meta_completada = cursor.fetchone()
     
     if not meta_completada:
-        # Marcar meta como completada y actualizar puntos
+        # Insertar en la tabla metas_completadas
         cursor.execute("INSERT INTO metas_completadas (usuario_id, meta_id) VALUES (%s, %s)", (user_id, meta_id))
-        cursor.execute("UPDATE usuario SET puntos = puntos + (SELECT beneficio_estimado FROM metas WHERE id = %s) WHERE id = %s", (meta_id, user_id))
+
+        # Obtener los puntos de la meta
+        cursor.execute("SELECT puntos FROM metas WHERE id = %s", (meta_id,))
+        puntos_meta = cursor.fetchone()['puntos']
+        
+        # Insertar los puntos en la tabla puntuaciones
+        cursor.execute("INSERT INTO puntuaciones (usuario_id, cantidad, contenido) VALUES (%s, %s, %s)", (user_id, puntos_meta, 'Meta completada'))
         mysql.connection.commit()
         flash('Meta completada y puntos actualizados', 'success')
     else:
@@ -289,6 +303,7 @@ def completar_meta(meta_id):
     
     cursor.close()
     return redirect(url_for('metas'))
+
 
 @app.route('/actividades_completadas')
 def actividades_completadas():
