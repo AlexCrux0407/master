@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ControladorVistas;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ControladorVistas::class, 'index'])->name('index');
+Route::get('/actividades', [ControladorVistas::class, 'actividades'])->name('actividades');
+Route::get('/progreso', [ControladorVistas::class, 'progreso'])->name('progreso');
+Route::get('/configuracion', [ControladorVistas::class, 'configuracion'])->name('configuracion');
