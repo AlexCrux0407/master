@@ -23,4 +23,16 @@
         <img src="{{ asset('images/animal-amigable.png') }}" alt="Animal amigable">
     </div>
 </div>
+
+<!-- Mostrar mensaje de éxito con SweetAlert si existe -->
+@if (session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: '¡Éxito!',
+            text: '{{ session('success') }}',
+            confirmButtonText: 'Aceptar'
+        });
+    </script>
+@endif
 @endsection
