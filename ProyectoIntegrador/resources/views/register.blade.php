@@ -10,13 +10,26 @@
 </head>
 <body>
     <div class="register-container">
+
         <h2>Crear Cuenta</h2>
-        <form method="post" action="{{ route('registro') }}">
+        <form method="post" action="{{ route('enviar') }}">
             @csrf
-            <input type="text" name="username" placeholder="Nombre de usuario" required>
-            <input type="email" name="correo_electronico" placeholder="Correo Electrónico" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
-            <input type="password" name="password_confirmation" placeholder="Confirmar Contraseña" required>
+            <input type="text" name="nombreUsuario" placeholder="Nombre de Usuario"value={{old('nombreUsuario')}} > 
+            <small class="fst-italic text-danger">{{$errors->first('nombreUsuario')}}</small>
+
+            <input type="text" name="txtnombre" placeholder="Nombre" value={{old('txtnombre')}} >
+            <small class="fst-italic text-danger">{{$errors->first('txtnombre')}}</small>
+
+            <input type="text" name="txtapellido" placeholder="Apellidos" value={{old('txtapellido')}} >
+            <small class="fst-italic text-danger">{{$errors->first('txtapellido')}}</small>
+
+            <input type="email" name="correo" placeholder="Correo Electrónico" value={{old('correo')}} >
+            <small class="fst-italic text-danger">{{$errors->first('correo')}}</small>
+
+            <input type="password" name="password" placeholder="Contraseña"  >
+            <small class="fst-italic text-danger">{{$errors->first('password')}}</small>
+            
+            
             <button type="submit">Registrar</button>
         </form>
         

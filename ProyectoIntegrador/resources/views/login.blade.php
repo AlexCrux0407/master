@@ -10,39 +10,33 @@
 </head>
 <body>
     <div class="login-container">
+        @if(session('exito'))
+            <script>
+                Swal.fire({
+                    title: "¡Bien hecho!",
+                    text: "{{ session('exito') }}",
+                    icon: "success"
+                });
+            </script>
+        @endif
+
         <h2>Iniciar Sesión</h2>
-        <form method="post" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('iniciar') }}">
             @csrf
-            <input type="text" name="username" placeholder="Nombre de usuario" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
+            <input type="text" name="username" placeholder="Nombre de usuario" >
+            <small class="fst-italic text-danger">{{ $errors->first('username') }}</small>
+
+            <input type="password" name="password" placeholder="Contraseña" >
+            <small class="fst-italic text-danger">{{ $errors->first('password') }}</small>
+
             <button type="submit">Iniciar Sesión</button>
+
+            @if($errors->has('login'))
+                <p class="fst-italic text-danger">{{ $errors->first('login') }}</p>
+            @endif
         </form>
         
-        
-        <a href="{{ route('register') }}">Crear una cuenta</a>
+        <a href="{{ route('registrar') }}">Crear una cuenta</a>
     </div>
-
-    <!-- Mostrar mensajes de éxito o error con SweetAlert -->
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: '{{ session('success') }}',
-                confirmButtonText: 'Aceptar'
-            });
-        </script>
-    @endif
-
-    @if ($errors->has('login'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: '{{ $errors->first('login') }}',
-                confirmButtonText: 'Aceptar'
-            });
-        </script>
-    @endif
 </body>
 </html>

@@ -10,15 +10,6 @@ class ControladorVistas extends Controller
     {
         return view('index');
     }
-    public function login()
-    {
-        return view('login');
-    }
-    public function register()
-    {
-        return view('register');
-    }
-
     public function actividades()
     {
         return view('actividades');

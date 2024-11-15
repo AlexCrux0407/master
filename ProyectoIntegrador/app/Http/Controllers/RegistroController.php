@@ -2,27 +2,78 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Http\Requests\ValidadorRegistro;
 use Illuminate\Http\Request;
 
 class RegistroController extends Controller
 {
-    public function registrarUsuario(Request $request)
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        // Validación de los datos de entrada
-        $validatedData = $request->validate([
-            'username' => 'required|string|min:3|max:20|unique:users,username',
-            'correo_electronico' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed',
+        return view('register');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('login');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(ValidadorRegistro $request)
+    {
+        DB::table('usuario')->insert([
+            "nombreUsuario"=>$request->input('nombreUsuario'),
+            "nombre"=>$request->input('txtnombre'),
+            "apellido"=>$request->input('txtapellido'),
+            "correo"=>$request->input('correo'),
+            "password" =>Hash::make($request->input('password')),
+            "created_at"=>Carbon::now(),
+            "updated_at"=>Carbon::now()
         ]);
+        $usuario=$request->input('txtnombre');
+        session()->flash('exito','se guardo el usuario'.$usuario);
+        return to_route('login');
+    }
 
-        // Si la validación pasa, puedes proceder a crear el usuario
-        // Ejemplo de almacenamiento (suponiendo que tienes el modelo User):
-        // User::create([
-        //     'username' => $validatedData['username'],
-        //     'email' => $validatedData['correo_electronico'],
-        //     'password' => bcrypt($validatedData['password']),
-        // ]);
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
 
-        return redirect()->back()->with('success', 'Usuario registrado exitosamente');
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }
