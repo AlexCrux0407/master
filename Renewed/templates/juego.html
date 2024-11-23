@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juegos Recomendados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .game-description {
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .game-description h2 {
+            margin-top: 0;
+        }
+        .game-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: #00796b;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        .game-button:hover {
+            background-color: #00796b;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #00796b;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            color: #00796b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Juegos Recomendados</h1>
+        <div class="game-description">
+            <h2>Juego 1: EcoKids</h2>
+            <p>Un juego educativo donde los niños pueden aprender sobre el reciclaje y la conservación del medio ambiente de una manera divertida e interactiva.</p>
+            <a href="https://www.ecokids.com/" class="game-button" target="_blank">Jugar EcoKids</a>
+        </div>
+        <div class="game-description">
+            <h2>Juego 2: Recycle Roundup</h2>
+            <p>Ayuda a limpiar el parque clasificando correctamente los materiales reciclables. Este juego enseña a los niños la importancia de reciclar.</p>
+            <a href="https://www.nationalgeographic.org/education/media/recycle-roundup/" class="game-button" target="_blank">Jugar Recycle Roundup</a>
+        </div>
+        <div class="game-description">
+            <h2>Juego 3: Clean Up the River</h2>
+            <p>Un juego donde los niños deben limpiar un río recogiendo basura y evitando que más desechos lleguen al agua.</p>
+            <a href="https://pbskids.org/plumlanding/games/cleanup/" class="game-button" target="_blank">Jugar Clean Up the River</a>
+        </div>
+        <a href="{{ url_for('index') }}" class="back-link">Volver al Inicio</a>
+    </div>
+</body>
+</html>

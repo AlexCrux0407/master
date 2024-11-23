@@ -112,12 +112,12 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
+
         cursor = mysql.connection.cursor()
         cursor.execute('SELECT * FROM usuario WHERE Nombre = %s', (username,))
         user = cursor.fetchone()
         cursor.close()
-        
+
         if user and check_password_hash(user['contraseña'], password):
             session['user_id'] = user['id']
             session['username'] = user['Nombre']
@@ -150,14 +150,6 @@ def register():
             cursor.close()
     
     return render_template('register.html')
-
-@app.route('/dashboard')
-def dashboard():
-    if 'username' not in session:
-        flash('Por favor inicia sesión primero', 'danger')
-        return redirect(url_for('login'))
-    
-    return render_template('dashboard.html')
 
 @app.route('/actividades')
 def actividades():
@@ -205,7 +197,36 @@ def experimentos():
 def historias():
     if 'username' not in session:
         return redirect(url_for('login'))
-    return render_template('historias.html')
+    
+    lecturas = [
+        {
+            'title': 'Lectura 1: La Aventura de la Energía Renovable',
+            'page_url': 'lectura1',
+            'page_text': 'Ver lectura'
+        },
+        {
+            'title': 'Lectura 2: La Gran Aventura en el Bosque de Verdesueño',
+            'page_url': 'lectura2',
+            'page_text': 'Ver lectura'
+        },
+        {
+            'title': 'Lectura 3: La Misión de los Guardianes del Agua en el Río Amazonas',
+            'page_url': 'lectura3',
+            'page_text': 'Ver lectura'
+        },
+    ]
+    glosario = {
+        'title': 'Glosario',
+        'page_url': 'glosario',
+        'page_text': 'Ver glosario'
+    }
+    referencias = {
+        'title': 'Referencias',
+        'page_url': 'referencias',
+        'page_text': 'Ver referencias'
+    }
+    
+    return render_template('historias.html', lecturas=lecturas, glosario=glosario, referencias=referencias)
 
 @app.route('/logros')
 def logros():
@@ -217,15 +238,12 @@ def logros():
 def estadisticas():
     if 'username' not in session:
         return redirect(url_for('login'))
-    
+
     cursor = mysql.connection.cursor()
     query = """
-    SELECT a.nombre AS nombre_actividad, p.cantidad AS puntos 
-    FROM actividades a 
-    JOIN puntuaciones p ON a.puntuaciones_id = p.id
-    JOIN perfil_actividades pa ON a.id = pa.actividad_id
-    JOIN perfil pf ON pa.Perfil_id = pf.id
-    JOIN usuario u ON pf.usuario_id = u.id
+    SELECT p.cantidad AS puntos, p.contenido AS nombre_actividad 
+    FROM puntuaciones p
+    JOIN usuario u ON p.usuario_id = u.id
     WHERE u.id = %s
     """
     cursor.execute(query, (session['user_id'],))
@@ -234,22 +252,34 @@ def estadisticas():
 
     return render_template('estadisticas.html', stats=stats)
 
+
+
+
+
 @app.route('/metas', methods=['GET', 'POST'])
 def metas():
     if 'username' not in session:
         return redirect(url_for('login'))
-    
+
     user_id = session['user_id']
-    metas = obtener_metas_aleatorias(user_id)
-    
+    cursor = mysql.connection.cursor()
+    cursor.execute("""
+        SELECT * FROM metas 
+        WHERE id NOT IN (SELECT meta_id FROM metas_completadas WHERE usuario_id = %s)
+    """, (user_id,))
+    metas = cursor.fetchall()
+    cursor.close()
+
     return render_template('metas.html', metas=metas)
+
 
 @app.route('/completar_meta/<int:meta_id>', methods=['POST'])
 def completar_meta(meta_id):
     if 'username' not in session:
         return redirect(url_for('login'))
-    
+
     user_id = session['user_id']
+
     cursor = mysql.connection.cursor()
     
     # Verificar si la meta ya fue completada
@@ -257,9 +287,15 @@ def completar_meta(meta_id):
     meta_completada = cursor.fetchone()
     
     if not meta_completada:
-        # Marcar meta como completada y actualizar puntos
+        # Insertar en la tabla metas_completadas
         cursor.execute("INSERT INTO metas_completadas (usuario_id, meta_id) VALUES (%s, %s)", (user_id, meta_id))
-        cursor.execute("UPDATE usuario SET puntos = puntos + (SELECT beneficio_estimado FROM metas WHERE id = %s) WHERE id = %s", (meta_id, user_id))
+
+        # Obtener los puntos de la meta
+        cursor.execute("SELECT puntos FROM metas WHERE id = %s", (meta_id,))
+        puntos_meta = cursor.fetchone()['puntos']
+        
+        # Insertar los puntos en la tabla puntuaciones
+        cursor.execute("INSERT INTO puntuaciones (usuario_id, cantidad, contenido) VALUES (%s, %s, %s)", (user_id, puntos_meta, 'Meta completada'))
         mysql.connection.commit()
         flash('Meta completada y puntos actualizados', 'success')
     else:
@@ -268,11 +304,33 @@ def completar_meta(meta_id):
     cursor.close()
     return redirect(url_for('metas'))
 
+
 @app.route('/actividades_completadas')
 def actividades_completadas():
     if 'username' not in session:
         return redirect(url_for('login'))
-    return render_template('actividades_completadas.html')
+
+    user_id = session['user_id']
+    cursor = mysql.connection.cursor()
+
+    # Obtener actividades completadas (quizzes y metas)
+    query = """
+    SELECT 'Quiz' AS tipo, 'Quiz completado' AS nombre, p.cantidad AS puntos, '' AS descripcion
+    FROM puntuaciones p
+    WHERE p.usuario_id = %s AND p.contenido = 'quiz'
+    UNION ALL
+    SELECT 'Meta' AS tipo, m.nombre AS nombre, p.cantidad AS puntos, m.descripcion AS descripcion
+    FROM puntuaciones p
+    JOIN metas_completadas mc ON p.usuario_id = mc.usuario_id AND p.contenido = 'Meta completada'
+    JOIN metas m ON mc.meta_id = m.id
+    WHERE p.usuario_id = %s
+    """
+    cursor.execute(query, (user_id, user_id))
+    actividades = cursor.fetchall()
+    cursor.close()
+
+    return render_template('actividades_completadas.html', actividades=actividades)
+
 
 @app.route('/ranking')
 def ranking():
@@ -299,6 +357,49 @@ def resumen_quiz():
     respuestas_incorrectas = datos['respuestas_incorrectas']
     puntos_posibles_totales = datos['puntos_posibles_totales']
     return render_template('resumen_quiz.html', puntos_totales=puntos_totales, respuestas_incorrectas=respuestas_incorrectas, puntos_posibles_totales=puntos_posibles_totales)
+
+@app.route('/lectura1')
+def lectura1():
+    return render_template('lectura1.html')
+
+@app.route('/lectura2')
+def lectura2():
+    return render_template('lectura2.html')
+
+@app.route('/lectura3')
+def lectura3():
+    return render_template('lectura3.html')
+
+@app.route('/glosario')
+def glosario():
+    return render_template('glosario.html')
+
+@app.route('/referencias')
+def referencias():
+    return render_template('referencias.html')
+
+@app.route('/submit_quiz', methods=['POST'])
+def submit_quiz():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    data = request.get_json()
+    print("Datos recibidos:", data)  # Mensaje de depuración
+    puntos_totales = data['puntos_totales']
+
+    cursor = mysql.connection.cursor()
+    cursor.execute("INSERT INTO puntuaciones (usuario_id, cantidad, contenido) VALUES (%s, %s, %s)", (user_id, puntos_totales, 'quiz'))
+    mysql.connection.commit()
+    cursor.close()
+
+    return jsonify({'status': 'success'})
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

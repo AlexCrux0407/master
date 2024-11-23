@@ -77,18 +77,20 @@
 
                 console.log("Datos a enviar:", datosResumen); // Imprime los datos para depuración
 
-                fetch('/resumen_quiz', {
+                fetch('/submit_quiz', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(datosResumen)
                 })
-                .then(response => response.text())
-                .then(html => {
-                    document.open();
-                    document.write(html);
-                    document.close();
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        window.location.href = "{{ url_for('estadisticas') }}";
+                    } else {
+                        console.error('Error al guardar los datos:', data);
+                    }
                 })
                 .catch(error => console.error('Error al enviar los datos:', error));
             }
