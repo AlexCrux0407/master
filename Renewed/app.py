@@ -102,8 +102,7 @@ def obtener_metas_aleatorias(user_id):
 
 @app.route('/')
 def index():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -152,70 +151,55 @@ def register():
 
 @app.route('/dashboard')
 def dashboard():
-    if 'username' not in session:
-        flash('Por favor inicia sesión primero', 'danger')
-        return redirect(url_for('login'))
-    
+
     return render_template('dashboard.html')
 
 @app.route('/actividades')
 def actividades():
-    if 'username' not in session:
-        return redirect(url_for('login'))
     return render_template('actividades.html')
 
 @app.route('/progreso')
 def progreso():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     return render_template('progreso.html')
 
 @app.route('/configuracion')
 def configuracion():
-    if 'username' not in session:
-        return redirect(url_for('login'))
     return render_template('configuracion.html')
 
 @app.route('/quiz')
 def quiz():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     return render_template('quiz.html')
 
 @app.route('/juego')
 def juego():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     return render_template('juego.html')
 
 @app.route('/manualidades')
 def manualidades():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     return render_template('manualidades.html')
 
 @app.route('/experimentos')
 def experimentos():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     return render_template('experimentos.html')
 
 @app.route('/historias')
 def historias():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     return render_template('historias.html')
 
 @app.route('/logros')
 def logros():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     return render_template('logros.html')
 
 @app.route('/estadisticas')
 def estadisticas():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     
     cursor = mysql.connection.cursor()
     query = """
@@ -235,8 +219,7 @@ def estadisticas():
 
 @app.route('/metas', methods=['GET', 'POST'])
 def metas():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     
     user_id = session['user_id']
     metas = obtener_metas_aleatorias(user_id)
@@ -245,8 +228,7 @@ def metas():
 
 @app.route('/completar_meta/<int:meta_id>', methods=['POST'])
 def completar_meta(meta_id):
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     
     user_id = session['user_id']
     cursor = mysql.connection.cursor()
@@ -269,14 +251,12 @@ def completar_meta(meta_id):
 
 @app.route('/actividades_completadas')
 def actividades_completadas():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     return render_template('actividades_completadas.html')
 
 @app.route('/ranking')
 def ranking():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+
     return render_template('ranking.html')
 
 @app.route('/logout')
