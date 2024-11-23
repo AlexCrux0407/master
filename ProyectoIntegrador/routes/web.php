@@ -8,6 +8,10 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\JuegoController;
 use App\Http\Controllers\ManualidadesController;
 use App\Http\Controllers\HistoriasController;
+use App\Http\Controllers\RankingController;
+
+Route::get('/progreso/ranking', [RankingController::class, 'index'])->name('ranking.index');
+
 
 
 Route::get('/', [ControladorVistas::class, 'index'])->name('index');

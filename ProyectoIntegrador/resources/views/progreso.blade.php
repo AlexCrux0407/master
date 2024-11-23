@@ -10,7 +10,7 @@
         <li><a href="#"><i class="fas fa-trophy"></i> Logros</a></li>
         <li><a href="#"><i class="fas fa-bullseye"></i> Metas</a></li>
         <li><a href="#"><i class="fas fa-check-circle"></i> Actividades Completadas</a></li>
-        <li><a href="#"><i class="fas fa-list-ol"></i> Ranking</a></li>
+        <li><a href="{{ route('ranking.index') }}"><i class="fas fa-list-ol"></i> Ranking</a></li> <!-- Ruta al ranking -->
     </ul>
     <div class="image-container small-margin">
         <img src="{{ asset('images/mascota-tortuga2.png') }}" alt="Mascota Tortuga">

@@ -28,4 +28,9 @@ class Usuario extends Authenticatable
 
     // Opcional: Configura la gestión de marcas de tiempo
     public $timestamps = true;
+    public function ranking()
+    {
+        return $this->hasOne(Ranking::class, 'usuario_id');
+    }
+
 }
