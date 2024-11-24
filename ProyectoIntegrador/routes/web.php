@@ -9,8 +9,10 @@ use App\Http\Controllers\JuegoController;
 use App\Http\Controllers\ManualidadesController;
 use App\Http\Controllers\HistoriasController;
 use App\Http\Controllers\RankingController;
+use App\Http\Controllers\ProgresoController;
 
 Route::get('/progreso/ranking', [RankingController::class, 'index'])->name('ranking.index');
+Route::get('/progreso/actividades', [ProgresoController::class, 'activities'])->name('progreso.activities');
 
 
 

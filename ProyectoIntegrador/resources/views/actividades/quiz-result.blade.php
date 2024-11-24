@@ -17,6 +17,6 @@
         <p>No te preocupes, sigue aprendiendo y practicando para mejorar.</p>
     @endif
 
-    <a href="{{ route('index') }}" class="back-link">Volver a Actividades</a>
+    <a href="{{ route('progreso.activities') }}" class="back-link">Ver Actividades Completadas</a>
 </div>
 @endsection

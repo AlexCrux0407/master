@@ -26,7 +26,7 @@ class ValidadorRegistro extends FormRequest
             'txtnombre' => 'required|min:4|max:255',
             'txtapellido' => 'required|min:4|max:255',
             'correo' => 'required|email:rfc,dns',
-            'password' => 'required|min:4',
+            'password' => 'required|min:8',
         ];
     }
 }
