@@ -11,8 +11,17 @@ use App\Http\Controllers\HistoriasController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\ProgresoController;
 
+
 Route::get('/progreso/ranking', [RankingController::class, 'index'])->name('ranking.index');
 Route::get('/progreso/actividades', [ProgresoController::class, 'activities'])->name('progreso.activities');
+
+Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index');
+
+//historias
+Route::get('/historias', [HistoriasController::class, 'index'])->name('historias.index');
+Route::post('/historias', [HistoriasController::class, 'store'])->name('historias.store');
+Route::delete('/historias/{id}', [HistoriasController::class, 'destroy'])->name('historias.destroy');
+
 
 
 
@@ -24,7 +33,6 @@ Route::get('/register', [RegistroController::class, 'index'])->name('registrar')
 Route::get('/progreso', [ControladorVistas::class, 'progreso'])->name('progreso');
 Route::get('/configuracion', [ControladorVistas::class, 'configuracion'])->name('configuracion');
 
-// Cambié el nombre de la ruta de actividades
 Route::get('/actividades', [ActividadesController::class, 'actividades'])->name('actividades');
 
 

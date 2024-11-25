@@ -16,7 +16,7 @@
     <h2>RECOMENDACIONES</h2>
     <p>Cumple tus objetivos diarios para ganar puntos y subir en el ranking semanal</p>
     <p><i class="fas fa-chart-line"></i></p>
-    <a href="#" class="btn-link">IR AHÍ</a>
+    <a href="{{ route('ranking.index') }}" class="btn-link">IR AHÍ</a>
     <p>No olvides desconectar los dispositivos electrónicos mientras no los uses, recuerda que consumen energía aunque estén apagados</p>
     <p><i class="fas fa-lightbulb"></i></p>
     <div class="image-container small-margin">
@@ -36,3 +36,5 @@
     </script>
 @endif
 @endsection
+
+

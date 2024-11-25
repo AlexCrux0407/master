@@ -4,7 +4,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #e0f7fa;
+    background-color: #b2ebf2;
     color: #004d40;
     margin: 0;
     padding: 0;
@@ -181,7 +181,7 @@ body {
 }
 
 
-/*  esto es para la pagina de experimentos  D: */
+/*  esto es para la pagina de experimentos   */
 
 .experimentos-list {
     list-style-type: none;
