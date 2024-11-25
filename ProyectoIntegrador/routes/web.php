@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControladorVistas;
 use App\Http\Controllers\RegistroController;
@@ -11,11 +12,9 @@ use App\Http\Controllers\HistoriasController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\ProgresoController;
 
-
-Route::get('/progreso/ranking', [RankingController::class, 'index'])->name('ranking.index');
+/* 
 Route::get('/progreso/actividades', [ProgresoController::class, 'activities'])->name('progreso.activities');
-
-Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index');
+Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index'); */
 
 //historias
 Route::get('/historias', [HistoriasController::class, 'index'])->name('historias.index');
@@ -31,18 +30,18 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/register', [RegistroController::class, 'index'])->name('registrar');
 
 Route::get('/progreso', [ControladorVistas::class, 'progreso'])->name('progreso');
-Route::get('/configuracion', [ControladorVistas::class, 'configuracion'])->name('configuracion');
+/* Route::get('/configuracion', [ControladorVistas::class, 'configuracion'])->name('configuracion'); */
 
-Route::get('/actividades', [ActividadesController::class, 'actividades'])->name('actividades');
-
-
-Route::get('/actividades/quiz', [QuizController::class, 'index'])->name('quiz.index'); // Muestra el quiz
-Route::post('/actividades/quiz/result', [QuizController::class, 'result'])->name('quiz.result'); // Procesa las respuestas
+/* Route::get('/actividades', [ActividadesController::class, 'actividades'])->name('actividades'); */
 
 
-Route::get('/actividades/juego', [JuegoController::class, 'index'])->name('juego.index');
+/* Route::get('/actividades/quiz', [QuizController::class, 'index'])->name('quiz.index'); */ // Muestra el quiz
+/* Route::post('/actividades/quiz/result', [QuizController::class, 'result'])->name('quiz.result'); */ // Procesa las respuestas
 
-Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index');
+
+/* Route::get('/actividades/juego', [JuegoController::class, 'index'])->name('juego.index'); */
+
+/* Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index'); */
 Route::get('/actividades/historias', [HistoriasController::class, 'index'])->name('historias.index');
 
 Route::post('/inicio', [LoginController::class, 'login'])->name('iniciar');
@@ -51,6 +50,38 @@ Route::post('/enviarusuario', [RegistroController::class, 'store'])->name('envia
 Route::get('/progreso/estadisticas', [ControladorVistas::class, 'verEstadisticas'])->name('progreso.estadisticas');
 Route::get('/progreso/logros', [ControladorVistas::class, 'logros'])->name('progreso.logros');
 Route::get('/progreso/metas', [ControladorVistas::class, 'metas'])->name('progreso.metas');
+
+
+
+
+
+
+Route::middleware(['auth.session'])->group(function () {
+    Route::get('/actividades/quiz', [QuizController::class, 'index'])->name('quiz.index');
+    Route::get('/progreso/ranking', [RankingController::class, 'index'])->name('ranking.index');
+    Route::get('/progreso/actividades', [ProgresoController::class, 'activities'])->name('progreso.activities');
+    Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index');
+    Route::get('/configuracion', [ControladorVistas::class, 'configuracion'])->name('configuracion');
+
+    Route::get('/actividades', [ActividadesController::class, 'actividades'])->name('actividades');
+    Route::post('/actividades/quiz/result', [QuizController::class, 'result'])->name('quiz.result'); // Procesa las respuestas
+
+
+    Route::get('/actividades/juego', [JuegoController::class, 'index'])->name('juego.index');
+    Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index');
+
+    // Otras rutas protegidas
+});
+
+
+
+
+
+
+
+
+
+
 
 
 

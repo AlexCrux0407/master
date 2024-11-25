@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Usuario;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('login');
     }
 
@@ -32,12 +34,21 @@ class LoginController extends Controller
             return back()->withErrors(['login' => 'Contraseña incorrecta.']);
         }
     
-        session(['usuario_id' => $usuario->id, 'nombreUsuario' => $usuario->nombre]);
+        // Usando put() para asegurarnos de que los valores se guarden correctamente en la sesión
+        session()->put('usuario_id', $usuario->id);
+        session()->put('nombreUsuario', $usuario->nombre);
     
-        return redirect()->route('index')->with('exito', '¡Inicio de sesión exitoso!'); // Envía mensaje de éxito
+        // Verifica que los datos estén ahora en la sesión
+       
+    
+        // Redirige directamente al index después de iniciar sesión
+        return redirect()->route('index')->with('exito', '¡Inicio de sesión exitoso!');
     }
     
     
+    
+
+
     public function logout()
     {
         // Eliminar los datos de la sesión

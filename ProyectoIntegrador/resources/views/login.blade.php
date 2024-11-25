@@ -26,7 +26,7 @@
                 Swal.fire({
                     title: "¡Sesión iniciada!",
                     text: "{{ session('exito') }}",
-                    imageUrl: "{{ asset('images/success-login.png') }}", <!-- Imagen personalizada -->
+                    imageUrl: "{{ asset('images/like.png') }}", <!-- Imagen personalizada -->
                     imageWidth: 100,
                     imageHeight: 100,
                     imageAlt: "Éxito",
