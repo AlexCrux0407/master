@@ -13,35 +13,30 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        // Validar los datos de entrada
         $request->validate([
-            'username' => 'required|string', // Cambiado a 'username' para coincidir con el formulario HTML
+            'username' => 'required|string',
             'password' => 'required|string|min:8',
         ]);
     
-        // Obtener el input de "username"
         $login = $request->input('username');
     
-        // Buscar al usuario por nombre de usuario o correo
         $usuario = Usuario::where('nombreUsuario', $login)
             ->orWhere('correo', $login)
             ->first();
     
-        // Verificar si el usuario existe
         if (!$usuario) {
             return back()->withErrors(['login' => 'Usuario no encontrado.']);
         }
     
-        // Verificar la contraseña
         if (!Hash::check($request->input('password'), $usuario->password)) {
             return back()->withErrors(['login' => 'Contraseña incorrecta.']);
         }
     
-        // Si el usuario y la contraseña son correctos
         session(['usuario_id' => $usuario->id, 'nombreUsuario' => $usuario->nombre]);
     
-        return redirect()->route('index')->with('exito', 'Inicio de sesión exitoso.');
+        return redirect()->route('index')->with('exito', '¡Inicio de sesión exitoso!'); // Envía mensaje de éxito
     }
+    
     
     public function logout()
     {

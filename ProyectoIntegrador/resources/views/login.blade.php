@@ -24,9 +24,13 @@
         @if(session('exito'))
             <script>
                 Swal.fire({
-                    title: "¡Bien hecho!",
+                    title: "¡Sesión iniciada!",
                     text: "{{ session('exito') }}",
-                    icon: "success"
+                    imageUrl: "{{ asset('images/success-login.png') }}", <!-- Imagen personalizada -->
+                    imageWidth: 100,
+                    imageHeight: 100,
+                    imageAlt: "Éxito",
+                    confirmButtonColor: "#00796b"
                 });
             </script>
         @endif

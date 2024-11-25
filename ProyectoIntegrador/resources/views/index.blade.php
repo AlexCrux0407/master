@@ -5,11 +5,13 @@
 @section('content')
 <div class="section">
     <h2>NOVEDADES</h2>
-    <p><i class="fas fa-bullhorn"></i> ¡Nueva actualización de la web con nuevas actividades!</p>
-    <p><i class="fas fa-thumbs-up"></i> ¡Ahora tenemos página de Facebook! Ve a seguirnos</p>
-    <p><i class="fas fa-smile"></i> No olviden seguirnos en nuestras redes sociales</p>
+    <ul>
+        <li><i class="fas fa-bullhorn"></i> ¡Nueva actualización de la web con nuevas actividades!</li>
+        <li><i class="fas fa-thumbs-up"></i> ¡Ahora tenemos página de Facebook! Ve a seguirnos</li>
+        <li><i class="fas fa-smile"></i> No olviden seguirnos en nuestras redes sociales</li>
+    </ul>
     <div class="image-container small-margin">
-        <img src="{{ asset('images/nino-feliz.png') }}" alt="Niño feliz">
+        <img src="{{ asset('images/nino-feliz.png') }}" alt="Niño feliz" style="filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.5));">
     </div>
 </div>
 <div class="section center">
@@ -20,21 +22,22 @@
     <p>No olvides desconectar los dispositivos electrónicos mientras no los uses, recuerda que consumen energía aunque estén apagados</p>
     <p><i class="fas fa-lightbulb"></i></p>
     <div class="image-container small-margin">
-        <img src="{{ asset('images/animal-amigable.png') }}" alt="Animal amigable">
+        <img src="{{ asset('images/animal-amigable.png') }}" alt="Animal amigable" style="filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.5));">
     </div>
 </div>
 
-<!-- Mostrar mensaje de éxito con SweetAlert si existe -->
-@if (session('success'))
+@if (session('exito'))
     <script>
         Swal.fire({
             icon: 'success',
-            title: '¡Éxito!',
-            text: '{{ session('success') }}',
+            title: '¡Bienvenido/a!',
+            text: '{{ session('exito') }}',
+            imageUrl: "{{ asset('images/like.png') }}", 
+            imageWidth: 100,
+            imageHeight: 100,
+            imageAlt: 'Inicio exitoso',
             confirmButtonText: 'Aceptar'
         });
     </script>
 @endif
 @endsection
-
-
