@@ -48,6 +48,12 @@ Route::get('/actividades/historias', [HistoriasController::class, 'index'])->nam
 Route::post('/inicio', [LoginController::class, 'login'])->name('iniciar');
 Route::post('/enviarusuario', [RegistroController::class, 'store'])->name('enviar');
 
+Route::get('/progreso/estadisticas', [ControladorVistas::class, 'verEstadisticas'])->name('progreso.estadisticas');
+Route::get('/progreso/logros', [ControladorVistas::class, 'logros'])->name('progreso.logros');
+Route::get('/progreso/metas', [ControladorVistas::class, 'metas'])->name('progreso.metas');
+
+
+
 
 /* // Ruta GET para mostrar el formulario de inicio de sesión
 Route::get('/login', [ControladorVistas::class, 'login'])->name('login');

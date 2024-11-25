@@ -6,9 +6,9 @@
 <div class="section center">
     <h2>Progreso</h2>
     <ul class="options-list">
-        <li><a href="#"><i class="fas fa-chart-bar"></i> Ver Estadísticas</a></li>
-        <li><a href="#"><i class="fas fa-trophy"></i> Logros</a></li>
-        <li><a href="#"><i class="fas fa-bullseye"></i> Metas</a></li>
+        <li><a href="{{ route('progreso.estadisticas') }}"><i class="fas fa-chart-bar"></i> Ver Estadísticas</a></li>
+        <li><a href="{{ route('progreso.logros') }}"><i class="fas fa-trophy"></i> Logros</a></li>
+        <li><a href="{{ route('progreso.metas') }}"><i class="fas fa-bullseye"></i> Metas</a></li>
         <li><a href="{{ route('progreso.activities') }}"><i class="fas fa-check-circle"></i> Actividades Completadas</a></li>
         <li><a href="{{ route('ranking.index') }}"><i class="fas fa-list-ol"></i> Ranking</a></li>
     </ul>

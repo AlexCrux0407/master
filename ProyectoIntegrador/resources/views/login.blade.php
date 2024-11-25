@@ -7,6 +7,17 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        .login-image {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .login-image img {
+            max-width: 150px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+    </style>
 </head>
 <body>
     <div class="login-container">
@@ -21,12 +32,17 @@
         @endif
 
         <h2>Iniciar Sesión</h2>
+        
+        <div class="login-image" id="loginImage">
+            <img src="{{ asset('images/default-user.png') }}" alt="Imagen inicial">
+        </div>
+
         <form method="POST" action="{{ route('iniciar') }}">
             @csrf
-            <input type="text" name="username" placeholder="Nombre de usuario" >
+            <input type="text" name="username" placeholder="Nombre de usuario" id="usernameInput">
             <small class="fst-italic text-danger">{{ $errors->first('username') }}</small>
 
-            <input type="password" name="password" placeholder="Contraseña" >
+            <input type="password" name="password" placeholder="Contraseña" id="passwordInput">
             <small class="fst-italic text-danger">{{ $errors->first('password') }}</small>
 
             <button type="submit">Iniciar Sesión</button>
@@ -38,5 +54,29 @@
         
         <a href="{{ route('registrar') }}">Crear una cuenta</a>
     </div>
+
+    <script>
+        const usernameInput = document.getElementById('usernameInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const loginImage = document.getElementById('loginImage').querySelector('img');
+
+        // Cambiar imagen cuando se escribe en los campos
+        usernameInput.addEventListener('focus', () => {
+            loginImage.src = "{{ asset('images/user-focus.png') }}";
+        });
+
+        passwordInput.addEventListener('focus', () => {
+            loginImage.src = "{{ asset('images/password-focus.png') }}";
+        });
+
+        // Imagen predeterminada al perder el enfoque
+        usernameInput.addEventListener('blur', () => {
+            loginImage.src = "{{ asset('images/default-user.png') }}";
+        });
+
+        passwordInput.addEventListener('blur', () => {
+            loginImage.src = "{{ asset('images/default-user.png') }}";
+        });
+    </script>
 </body>
 </html>
