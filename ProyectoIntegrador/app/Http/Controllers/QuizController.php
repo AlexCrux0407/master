@@ -59,7 +59,17 @@ class QuizController extends Controller
             'points' => $score,
             'completed_at' => now(),
         ]);
+        
 
+        //mandamos la info al ranking
+        \DB::table('ranking')->updateOrInsert(
+            ['usuario_id' => $usuario_id], // Si el usuario ya existe en la tabla, se actualiza
+            [
+                'total_points' => \DB::raw('total_points + ' . $score), // Incrementamos los puntos
+                'updated_at' => now(),
+            ]
+        );
+        
         // Calculamos el total de preguntas para la vista
         $total = count($correctAnswers);
 
