@@ -1,9 +1,9 @@
 body{
-    background-image: url("/images/fondos/fondologin.jpg");
+    background-image: url("/images/fondos/fondoregistro.jpg");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    background-attachment: fixed; /* Hace que la imagen quede fija mientras se hace scroll */
+    background-attachment: fixed; 
 
   
 }

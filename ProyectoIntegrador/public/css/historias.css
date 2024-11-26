@@ -29,7 +29,7 @@ form input[type="text"], form textarea {
 }
 
 form input[type="text"]:focus, form textarea:focus {
-    border-color: #007bff;
+    border-color: #004d40;
     background-color: #ffffff;
     outline: none;
 }

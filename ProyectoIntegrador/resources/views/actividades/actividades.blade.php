@@ -36,8 +36,10 @@
 
     <!-- Imagen con fondo blanco -->
     <div class="text-center mt-4 p-4 rounded-3 shadow-sm bg-white">
-        <img src="{{ asset('images/mascota-tortuga.png') }}" alt="Mascota Tortuga" class="img-fluid rounded-circle shadow" style="max-width: 20%; height: auto;">
-    </div>
+    <img src="{{ asset('images/mascota-tortuga.png') }}" 
+         alt="Mascota Tortuga" 
+         style="filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5)); max-width: 200px; height: auto;">
+</div>
 
     <!-- Enlace de vuelta al menú -->
     <div class="text-center mt-4">

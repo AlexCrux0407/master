@@ -23,13 +23,13 @@
             <label for="contenido">Escribe tu historia:</label>
             <textarea name="contenido" id="contenido" rows="5" placeholder="Comparte tu historia..." required class="form-control"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary w-100">Publicar Historia</button>
+        <button type="submit" >Publicar Historia</button>
     </form>
 
     <div class="card-container">
         @foreach($historias as $historia)
         <div class="card mb-4 p-4 shadow-sm rounded">
-            <p class="author font-weight-bold text-primary">{{ $historia->nombre ?? 'Anónimo' }}</p>
+            <p class="author font-weight-bold ">{{ $historia->nombre ?? 'Anónimo' }}</p>
             <p>{{ $historia->contenido }}</p>
             <p class="date text-muted">Publicado el {{ $historia->created_at->format('d/m/Y') }}</p>
             <form action="{{ route('historias.destroy', $historia->id) }}" method="POST">

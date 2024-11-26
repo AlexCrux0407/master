@@ -58,7 +58,7 @@
                 @endif
             </div>
 
-            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="submit">Registrar</button>
         </form>
 
         <a href="{{ route('login') }}">Ya tengo una cuenta</a>
