@@ -8,6 +8,7 @@ class ActividadesController extends Controller
 {
     public function actividades()
     {
+        
         return view('actividades.actividades');
     }
 }

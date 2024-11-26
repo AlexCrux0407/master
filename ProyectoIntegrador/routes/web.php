@@ -54,9 +54,20 @@ Route::get('/progreso/metas', [ControladorVistas::class, 'metas'])->name('progre
 
 
 
+//protegidos
+Route::get('/actividades/quiz', [QuizController::class, 'index'])->name('quiz.index');
+Route::get('/progreso/ranking', [RankingController::class, 'index'])->name('ranking.index');
+Route::get('/progreso/actividades', [ProgresoController::class, 'activities'])->name('progreso.activities');
+Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index');
+Route::get('/configuracion', [ControladorVistas::class, 'configuracion'])->name('configuracion');
 
+Route::get('/actividades', [ActividadesController::class, 'actividades'])->name('actividades');
+Route::post('/actividades/quiz/result', [QuizController::class, 'result'])->name('quiz.result'); // Procesa las respuestas
 
-Route::middleware(['auth.session'])->group(function () {
+Route::get('/actividades/juego', [JuegoController::class, 'index'])->name('juego.index');
+Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index');
+
+/* Route::middleware(['auth'])->group(function () {
     Route::get('/actividades/quiz', [QuizController::class, 'index'])->name('quiz.index');
     Route::get('/progreso/ranking', [RankingController::class, 'index'])->name('ranking.index');
     Route::get('/progreso/actividades', [ProgresoController::class, 'activities'])->name('progreso.activities');
@@ -66,12 +77,9 @@ Route::middleware(['auth.session'])->group(function () {
     Route::get('/actividades', [ActividadesController::class, 'actividades'])->name('actividades');
     Route::post('/actividades/quiz/result', [QuizController::class, 'result'])->name('quiz.result'); // Procesa las respuestas
 
-
     Route::get('/actividades/juego', [JuegoController::class, 'index'])->name('juego.index');
     Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index');
-
-    // Otras rutas protegidas
-});
+}); */
 
 
 
