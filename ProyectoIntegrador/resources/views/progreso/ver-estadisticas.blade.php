@@ -3,34 +3,40 @@
 @section('title', 'Ver Estadísticas')
 
 @section('content')
-<div class="section center">
-    <h2>Estadísticas de tu Progreso</h2>
-    <p>Consulta tu avance y metas alcanzadas.</p>
-    
-    <div class="progress-container">
-        <div class="progress-bar">
-            <div class="progress" style="width: 70%;">70%</div>
+<div class="section container py-5 bg-white shadow-sm rounded" style="max-width: 900px; margin: 0 auto;">
+    <h2 class="text-center mb-4">Estadísticas de tu Progreso</h2>
+    <p class="text-center mb-5">Consulta tu avance y metas alcanzadas.</p>
+
+    <!-- Progress Bar -->
+    <div class="progress-container mb-4">
+        <div class="progress-bar bg-light rounded">
+            <div class="progress bg-primary" style="width: 70%;"></div>
         </div>
-        <p><i class="fas fa-chart-line"></i> Porcentaje completado</p>
+        <p class="text-center mt-2"><i class="fas fa-chart-line"></i> <strong>70%</strong> Porcentaje completado</p>
     </div>
-    
-    <div class="stats-icons">
-        <div class="stat-icon">
-            <i class="fas fa-trophy"></i>
-            <p>Logros obtenidos: <strong>5</strong></p>
+
+    <!-- Stats Icons -->
+    <div class="stats-icons row text-center mb-5">
+        <div class="stat-icon col-md-4 mb-4">
+            <i class="fas fa-trophy fa-3x mb-2"></i>
+            <p><strong>Logros obtenidos:</strong> <span class="h4">5</span></p>
         </div>
-        <div class="stat-icon">
-            <i class="fas fa-star"></i>
-            <p>Puntos totales: <strong>200</strong></p>
+        <div class="stat-icon col-md-4 mb-4">
+            <i class="fas fa-star fa-3x mb-2"></i>
+            <p><strong>Puntos totales:</strong> <span class="h4">200</span></p>
         </div>
-        <div class="stat-icon">
-            <i class="fas fa-leaf"></i>
-            <p>Actividades completadas: <strong>10</strong></p>
+        <div class="stat-icon col-md-4 mb-4">
+            <i class="fas fa-leaf fa-3x mb-2"></i>
+            <p><strong>Actividades completadas:</strong> <span class="h4">10</span></p>
         </div>
     </div>
 
-    <a href="{{ route('progreso') }}" class="btn-link">Volver al Progreso</a>
+    <!-- Link to Progress Page -->
+    <div class="text-center">
+        <a href="{{ route('progreso') }}" class="btn btn-primary px-4 py-2">Volver al Progreso</a>
+    </div>
 </div>
+
 <link rel="stylesheet" href="{{ asset('css/estadisticas.css') }}">
 
 @endsection
