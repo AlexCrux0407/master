@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('ranking', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('usuario_id');
-            $table->integer('puntos');
+            $table->integer('total_points');
 
             $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
         });

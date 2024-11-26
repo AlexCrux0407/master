@@ -62,6 +62,7 @@ Route::get('/progreso/metas', [ControladorVistas::class, 'metas'])->name('progre
 
 //protegidos
 Route::get('/actividades/quiz', [QuizController::class, 'index'])->name('quiz.index');
+Route::get('/actividades/quiz/resultados', [ControladorVistas::class, 'quizresultado'])->name('quizResultado');
 Route::get('/progreso/ranking', [RankingController::class, 'index'])->name('ranking.index');
 Route::get('/progreso/actividades', [ProgresoController::class, 'activities'])->name('progreso.activities');
 Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index');

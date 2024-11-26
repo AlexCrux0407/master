@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\CompletedActivity;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class QuizController extends Controller
 {
@@ -12,7 +12,7 @@ class QuizController extends Controller
      */
     public function index()
     {
-        return view('actividades.quiz'); // Asegúrate de tener esta vista en resources/views/actividades/quiz.blade.php
+        return view('actividades.quiz');
     }
 
     /**
@@ -20,59 +20,50 @@ class QuizController extends Controller
      */
     public function result(Request $request)
     {
-        // Respuestas correctas del Quiz
-        $answers = [
+        // Recuperamos las respuestas del quiz desde el formulario
+        $answers = $request->only([
+            'question1', 'question2', 'question3', 'question4', 'question5',
+            'question6', 'question7', 'question8', 'question9', 'question10'
+        ]);
+
+        // Definir las respuestas correctas
+        $correctAnswers = [
             'question1' => 'b',
             'question2' => 'b',
             'question3' => 'c',
             'question4' => 'b',
             'question5' => 'a',
+            'question6' => 'b',
+            'question7' => 'b',
+            'question8' => 'b',
+            'question9' => 'c',
+            'question10' => 'b',
         ];
 
-        // Calcula la puntuación
+        // Inicializamos el puntaje
         $score = 0;
-        foreach ($answers as $question => $correctAnswer) {
-            if ($request->input($question) === $correctAnswer) {
+
+        // Calculamos el puntaje comparando las respuestas del usuario con las correctas
+        foreach ($answers as $question => $answer) {
+            if (isset($correctAnswers[$question]) && $correctAnswers[$question] === $answer) {
                 $score++;
             }
         }
 
-        // Verifica si el usuario está autenticado
-        if (auth()->check()) {
-            $usuarioId = auth()->id();
-            $quizName = "Quiz de Naturaleza";
-
-            try {
-                // Inserta el registro en la base de datos
-                DB::table('completed_activities')->insert([
-                    'usuario_id' => $usuarioId,
-                    'activity_type' => 'quiz',
-                    'activity_name' => $quizName,
-                    'points' => $score * 10, // Supongamos 10 puntos por respuesta correcta
-                    'completed_at' => now(),
-                ]);
-            } catch (\Exception $e) {
-                // Registra el error si ocurre algún problema
-                \Log::error('Error al registrar actividad: ' . $e->getMessage());
-                return back()->with('error', 'Hubo un error al registrar la actividad. Inténtalo nuevamente.');
-            }
-        } else {
-            return redirect()->route('login')->with('error', 'Debes iniciar sesión para completar el quiz.');
-        }
-
-        // Envía la puntuación a la vista de resultados
-        return view('actividades.quiz-result', [
-            'score' => $score,
-            'total' => count($answers),
+        // Guardamos los resultados en la base de datos
+        $usuario_id = session('usuario_id');
+        CompletedActivity::create([
+            'usuario_id' => $usuario_id,
+            'activity_type' => 'quiz',
+            'activity_name' => 'Quiz de Naturaleza',
+            'points' => $score,
+            'completed_at' => now(),
         ]);
-    }
 
-    /**
-     * Método para depurar si el usuario está autenticado.
-     */
-    public function finishQuiz(Request $request)
-    {
-        // Depura el ID del usuario
-        dd(auth()->id());
+        // Calculamos el total de preguntas para la vista
+        $total = count($correctAnswers);
+
+        // Retornamos los resultados a la vista
+        return view('actividades.quiz-result', compact('score', 'total'));
     }
 }

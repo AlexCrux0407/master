@@ -38,6 +38,12 @@ class ControladorVistas extends Controller
     public function metas() {
         return view('progreso.metas');
     }
+
+
+    public function quizresultado() {
+        return view('actividades.quiz-result');
+    }
+    
     
     
 }
