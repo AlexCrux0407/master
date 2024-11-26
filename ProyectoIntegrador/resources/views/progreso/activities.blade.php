@@ -41,16 +41,26 @@
         margin: 20px auto;
         border-collapse: collapse;
         text-align: center;
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .activities-table th, .activities-table td {
-        border: 1px solid #ddd;
-        padding: 8px;
+        padding: 12px 15px;
     }
 
     .activities-table th {
         background-color: #4CAF50;
         color: white;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .activities-table tr {
+        border-bottom: 1px solid #ddd;
     }
 
     .activities-table tr:nth-child(even) {
@@ -58,17 +68,24 @@
     }
 
     .activities-table tr:hover {
-        background-color: #ddd;
+        background-color: #e0f7fa;
+        transform: scale(1.02);
+        transition: all 0.2s ease-in-out;
     }
 
     .back-link {
+        display: inline-block;
         margin-top: 20px;
         color: #4CAF50;
         text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
     }
 
     .back-link:hover {
         text-decoration: underline;
+        color: #00796b;
     }
 </style>
+
 @endsection
