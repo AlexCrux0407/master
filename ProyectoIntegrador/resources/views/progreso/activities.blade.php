@@ -3,7 +3,7 @@
 @section('title', 'Actividades Completadas')
 
 @section('content')
-<div class="section container py-5">
+<div class="section container py-5 bg-white">
     <h2 class="text-center mb-4 text-primary font-weight-bold">Actividades Completadas</h2>
     <p class="text-center mb-5 text-muted">Consulta tus actividades y los puntos obtenidos. ¡Sigue alcanzando nuevas metas!</p>
 
@@ -12,7 +12,8 @@
             <i class="fas fa-exclamation-circle"></i> No has completado ninguna actividad aún. ¡Empieza ahora!
         </div>
     @else
-        <div class="table-responsive">
+        <div class="table-responsive ">
+            
             <table class="table table-hover table-light shadow-lg rounded-lg">
                 <thead class="thead-dark">
                     <tr>
