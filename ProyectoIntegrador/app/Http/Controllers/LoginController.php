@@ -41,9 +41,12 @@ class LoginController extends Controller
         // Almacenar datos del usuario en la sesión
         session()->put('usuario_id', $usuario->id);
         session()->put('nombreUsuario', $usuario->nombreUsuario);
+        session()->put('nombre', $usuario->nombre);
+        session()->put('apellido', $usuario->apellido);
+        session()->put('correo', $usuario->correo);
 
         // Verificar los datos de la sesión
-        /* dd(session()->all()); */
+        
 
 
         // Redirigir al index con un mensaje de éxito
