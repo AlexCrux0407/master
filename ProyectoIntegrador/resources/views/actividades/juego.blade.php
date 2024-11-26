@@ -3,17 +3,20 @@
 @section('title', 'Juega un Juego')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/juego.css') }}">
+
 <div class="section center">
-    <h2>Juego de Memoria - Cuida el Medio Ambiente</h2>
-    <p>Encuentra las parejas de imágenes relacionadas con el medio ambiente.</p>
+    <h2 class="game-title">Juego de Memoria - Cuida el Medio Ambiente</h2>
+    <p class="game-description">Encuentra las parejas de imágenes relacionadas con el medio ambiente.</p>
 
     <div id="game-board" class="game-board">
         <!-- Las cartas del juego se generarán aquí -->
     </div>
 
-    <button id="restart-button" class="btn btn-primary">Reiniciar Juego</button>
-
-    <a href="{{ route('actividades') }}" class="back-link">Volver a Actividades</a>
+    <div class="game-controls d-flex justify-content-center">
+        <button id="restart-button" class="btn btn-primary btn-lg mt-4 mx-2">Reiniciar Juego</button>
+        <a href="{{ route('actividades') }}" class="btn btn-outline-secondary btn-lg mt-4 mx-2">Volver a Actividades</a>
+    </div>
 </div>
 
 <!-- Incluir el script del juego -->

@@ -3,78 +3,67 @@
 @section('title', 'Progreso')
 
 @section('content')
-<div class="section center">
-    <h2>Progreso</h2>
-    <ul class="options-list">
-        <li><a href="{{ route('progreso.estadisticas') }}"><i class="fas fa-chart-bar"></i> Ver Estadísticas</a></li>
-        <li><a href="{{ route('progreso.logros') }}"><i class="fas fa-trophy"></i> Logros</a></li>
-        <li><a href="{{ route('progreso.metas') }}"><i class="fas fa-bullseye"></i> Metas</a></li>
-        <li><a href="{{ route('progreso.activities') }}"><i class="fas fa-check-circle"></i> Actividades Completadas</a></li>
-        <li><a href="{{ route('ranking.index') }}"><i class="fas fa-list-ol"></i> Ranking</a></li>
+<div class="container py-5 bg-light rounded-3 shadow-sm">
+    <h2 class="text-center mb-4 text-primary">Progreso</h2>
+    
+    <!-- Lista de opciones con tarjetas -->
+    <ul class="list-unstyled row row-cols-1 row-cols-md-2 g-4">
+        <li class="col">
+            <a href="{{ route('progreso.estadisticas') }}" class="d-flex align-items-center p-4 border rounded-3 shadow-sm bg-white text-dark text-decoration-none hover-shadow">
+                <i class="fas fa-chart-bar fa-3x me-3"></i>
+                <span>Ver Estadísticas</span>
+            </a>
+        </li>
+        <li class="col">
+            <a href="{{ route('progreso.logros') }}" class="d-flex align-items-center p-4 border rounded-3 shadow-sm bg-white text-dark text-decoration-none hover-shadow">
+                <i class="fas fa-trophy fa-3x me-3"></i>
+                <span>Logros</span>
+            </a>
+        </li>
+        <li class="col">
+            <a href="{{ route('progreso.metas') }}" class="d-flex align-items-center p-4 border rounded-3 shadow-sm bg-white text-dark text-decoration-none hover-shadow">
+                <i class="fas fa-bullseye fa-3x me-3"></i>
+                <span>Metas</span>
+            </a>
+        </li>
+        <li class="col">
+            <a href="{{ route('progreso.activities') }}" class="d-flex align-items-center p-4 border rounded-3 shadow-sm bg-white text-dark text-decoration-none hover-shadow">
+                <i class="fas fa-check-circle fa-3x me-3"></i>
+                <span>Actividades Completadas</span>
+            </a>
+        </li>
+        <li class="col">
+            <a href="{{ route('ranking.index') }}" class="d-flex align-items-center p-4 border rounded-3 shadow-sm bg-white text-dark text-decoration-none hover-shadow">
+                <i class="fas fa-list-ol fa-3x me-3"></i>
+                <span>Ranking</span>
+            </a>
+        </li>
     </ul>
-    <div class="image-container small-margin">
-        <img src="{{ asset('images/mascota-tortuga2.png') }}" alt="Mascota Tortuga">
+
+    <!-- Imagen con fondo blanco y estilo mejorado -->
+    <div class="text-center mt-4 p-4 rounded-3 shadow-sm bg-white">
+        <img src="{{ asset('images/mascota-tortuga2.png') }}" alt="Mascota Tortuga" class="img-fluid rounded-circle shadow" style="max-width: 18%; height: auto;">
     </div>
-    <a href="{{ route('index') }}" class="back-link">Volver al Menú Principal</a>
+
+    <!-- Enlace de vuelta al menú -->
+    <div class="text-center mt-4">
+        <a href="{{ route('index') }}" class="btn btn-primary btn-lg">Volver al Menú Principal</a>
+    </div>
 </div>
+@endsection
 
+@push('styles')
 <style>
-    .options-list {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
+    /* Efecto de hover para los enlaces */
+    .hover-shadow:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
-
-    .options-list li {
-        margin: 10px 0;
+    /* Estilo para el contenedor de imagen */
+    .img-fluid {
+        transition: transform 0.3s ease;
     }
-
-    .options-list a {
-        display: block;
-        padding: 10px 20px;
-        font-size: 18px;
-        text-decoration: none;
-        border-radius: 10px;
-        color: #0288d1;
-        font-weight: bold;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-
-    .options-list a i {
-        margin-right: 10px;
-    }
-
-    .options-list a:hover {
-        background-color: #0288d1;
-        color: white;
-    }
-
-    /* Remover el contorno azul al enfocar */
-    .options-list a:focus {
-        outline: none;
-        box-shadow: none;
-    }
-
-    .back-link {
-        margin-top: 20px;
-        color: #0288d1;
-        text-decoration: none;
-        font-size: 16px;
-    }
-
-    .back-link:hover {
-        text-decoration: underline;
-    }
-
-    .image-container {
-        margin: 20px auto;
-        text-align: center;
-    }
-
-    .image-container img {
-        width: 150px;
-        height: auto;
+    .img-fluid:hover {
+        transform: scale(1.1);
     }
 </style>
-@endsection
+@endpush
