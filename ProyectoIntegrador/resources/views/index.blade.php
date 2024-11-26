@@ -3,26 +3,45 @@
 @section('title', 'Página de Hábitos')
 
 @section('content')
-<div class="section">
-    <h2>NOVEDADES</h2>
-    <ul>
-        <li><i class="fas fa-bullhorn"></i> ¡Nueva actualización de la web con nuevas actividades!</li>
-        <li><i class="fas fa-thumbs-up"></i> ¡Ahora tenemos página de Facebook! Ve a seguirnos</li>
-        <li><i class="fas fa-smile"></i> No olviden seguirnos en nuestras redes sociales</li>
-    </ul>
-    <div class="image-container small-margin">
-        <img src="{{ asset('images/nino-feliz.png') }}" alt="Niño feliz" style="filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.5));">
-    </div>
-</div>
-<div class="section center">
-    <h2>RECOMENDACIONES</h2>
-    <p>Cumple tus objetivos diarios para ganar puntos y subir en el ranking semanal</p>
-    <p><i class="fas fa-chart-line"></i></p>
-    <a href="{{ route('ranking.index') }}" class="btn-link">IR AHÍ</a>
-    <p>No olvides desconectar los dispositivos electrónicos mientras no los uses, recuerda que consumen energía aunque estén apagados</p>
-    <p><i class="fas fa-lightbulb"></i></p>
-    <div class="image-container small-margin">
-        <img src="{{ asset('images/animal-amigable.png') }}" alt="Animal amigable" style="filter: drop-shadow(3px 3px 5px rgba(0, 0, 0, 0.5));">
+<div class="container py-5">
+    <div class="row g-4"> <!-- Añadir separación entre columnas -->
+        <!-- Novedades Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100"> <!-- Hacer que la tarjeta tenga la misma altura -->
+                <div class="card-header bg-success text-white text-center">
+                    <h5 class="mb-0">NOVEDADES</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-bullhorn"></i> ¡Nueva actualización de la web con nuevas actividades!</li>
+                        <li><i class="fas fa-thumbs-up"></i> ¡Ahora tenemos página de Facebook! Ve a seguirnos</li>
+                        <li><i class="fas fa-smile"></i> No olviden seguirnos en nuestras redes sociales</li>
+                    </ul>
+                    <div class="text-center">
+                        <!-- Reducir el tamaño de la imagen -->
+                        <img src="{{ asset('images/nino-feliz.png') }}" alt="Niño feliz" class="img-fluid rounded shadow" style="max-width: 50%; height: auto;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recomendaciones Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm h-100"> <!-- Hacer que la tarjeta tenga la misma altura -->
+                <div class="card-header bg-success text-white text-center">
+                    <h5 class="mb-0">RECOMENDACIONES</h5>
+                </div>
+                <div class="card-body">
+                    <p><i class="fas fa-chart-line"></i> Cumple tus objetivos diarios para ganar puntos y subir en el ranking semanal</p>
+                    <a href="{{ route('ranking.index') }}" class="btn btn-outline-primary">IR AHÍ</a>
+                    <p class="mt-3"><i class="fas fa-lightbulb"></i> No olvides desconectar los dispositivos electrónicos mientras no los uses, recuerda que consumen energía aunque estén apagados.</p>
+                    <div class="text-center">
+                        <!-- Reducir el tamaño de la imagen -->
+                        <img src="{{ asset('images/animal-amigable.png') }}" alt="Animal amigable" class="img-fluid rounded shadow" style="max-width: 50%; height: auto;">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

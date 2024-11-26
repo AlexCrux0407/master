@@ -3,17 +3,45 @@
 @section('title', 'Actividades')
 
 @section('content')
-<div class="section center">
-    <h2>Actividades</h2>
-    <ul class="options-list">
-        <li><a href="{{ route('quiz.index') }}"><i class="fas fa-question-circle"></i> Realiza un Quiz</a></li>
-        <li><a href="{{ route('juego.index') }}"><i class="fas fa-gamepad"></i> Juega un Juego</a></li>
-        <li><a href="{{ route('manualidades.index') }}"><i class="fas fa-paint-brush"></i> Manualidades</a></li>
-        <li><a href="{{ route('historias.index') }}"><i class="fas fa-book"></i> Historias</a></li>
+<div class="container py-5  bg-white">
+    <h2 class="text-center mb-4">Actividades</h2>
+    
+    <!-- Lista de opciones -->
+    <ul class="list-unstyled row row-cols-1 row-cols-md-2 g-4">
+        <li class="col">
+            <a href="{{ route('quiz.index') }}" class="d-flex align-items-center p-3 border rounded shadow-sm">
+                <i class="fas fa-question-circle fa-2x me-3"></i>
+                <span>Realiza un Quiz</span>
+            </a>
+        </li>
+        <li class="col">
+            <a href="{{ route('juego.index') }}" class="d-flex align-items-center p-3 border rounded shadow-sm">
+                <i class="fas fa-gamepad fa-2x me-3"></i>
+                <span>Juega un Juego</span>
+            </a>
+        </li>
+        <li class="col">
+            <a href="{{ route('manualidades.index') }}" class="d-flex align-items-center p-3 border rounded shadow-sm">
+                <i class="fas fa-paint-brush fa-2x me-3"></i>
+                <span>Manualidades</span>
+            </a>
+        </li>
+        <li class="col">
+            <a href="{{ route('historias.index') }}" class="d-flex align-items-center p-3 border rounded shadow-sm">
+                <i class="fas fa-book fa-2x me-3"></i>
+                <span>Historias</span>
+            </a>
+        </li>
     </ul>
-    <div class="image-container small-margin">
-        <img src="{{ asset('images/mascota-tortuga.png') }}" alt="Mascota Tortuga">
+
+    <!-- Imagen con fondo blanco -->
+    <div class="text-center mt-4 p-4 rounded shadow-sm">
+        <img src="{{ asset('images/mascota-tortuga.png') }}" alt="Mascota Tortuga" class="img-fluid rounded shadow" style="max-width: 17%; height: auto;">
     </div>
-    <a href="{{ route('index') }}" class="back-link">Volver al Menú Principal</a>
+
+    <!-- Enlace de vuelta al menú -->
+    <div class="text-center mt-3">
+        <a href="{{ route('index') }}" class="btn btn-outline-primary">Volver al Menú Principal</a>
+    </div>
 </div>
 @endsection

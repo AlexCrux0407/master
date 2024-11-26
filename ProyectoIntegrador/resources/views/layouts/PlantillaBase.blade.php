@@ -11,7 +11,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <style>
-        /* Ajustes de la barra lateral */
+        /* Estilos para el navbar */
+        nav {
+            z-index: 1050;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #fff;
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: #28a745;
+        }
+
+        /* Estilos de la barra lateral */
         .sidebar {
             width: 300px;
             height: 100vh;
@@ -21,7 +34,7 @@
             background-color: #f8f9fa;
             box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
             transition: all 0.4s ease-in-out;
-            z-index: 1050;
+            z-index: 1040;
         }
 
         .sidebar.active {
@@ -36,17 +49,39 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1049;
+            z-index: 1039;
         }
 
         .overlay.active {
             display: block;
         }
+
+        .list-group-item {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .list-group-item:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Estilos para los iconos */
+        .fa {
+            width: 30px;
+            text-align: center;
+        }
+
+        /* Estilo activo en la barra lateral */
+        .list-group-item.active {
+            background-color: #28a745;
+            color: white;
+        }
     </style>
 </head>
+<body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark  bg-success">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -54,7 +89,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active " href="{{ route('index') }}">INICIO</a>
+                        <a class="nav-link active" href="{{ route('index') }}">INICIO</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('actividades') }}">ACTIVIDADES</a>
@@ -76,7 +111,10 @@
             <h5 class="text-primary">Configuración</h5>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex align-items-center">
-                    <a class="fa fa-user-circle me-2 "  href="{{route('informacionUsuario')}}" ></a> Ajuste de Perfil
+                    <a href="{{ route('informacionUsuario') }}" class="list-group-item d-flex align-items-center">
+                        <i class="fa fa-user-circle me-2" aria-label="Ajuste de Perfil"></i> Ajuste de Perfil
+                    </a>
+                    
                 </li>
                 <li class="list-group-item d-flex align-items-center">
                     <i class="fa fa-bell me-2"></i> Notificaciones
@@ -98,7 +136,7 @@
     <div class="overlay" id="overlay"></div>
 
     <!-- Main Content -->
-    <div class="container mt-5">
+    <div class="container mt-5 pt-5">
         @yield('content')
     </div>
 
@@ -118,6 +156,15 @@
         overlay.addEventListener('click', () => {
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
+        });
+
+        // Resaltar la opción activa de la barra lateral
+        const listItems = document.querySelectorAll('.list-group-item');
+        listItems.forEach(item => {
+            item.addEventListener('click', () => {
+                listItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
         });
     </script>
 </body>
