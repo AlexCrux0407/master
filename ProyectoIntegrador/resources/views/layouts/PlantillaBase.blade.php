@@ -76,7 +76,7 @@
             <h5 class="text-primary">Configuración</h5>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex align-items-center">
-                    <i class="fa fa-user-circle me-2 "  href="#" ></i> Ajuste de Perfil
+                    <a class="fa fa-user-circle me-2 "  href="{{route('informacionUsuario')}}" ></a> Ajuste de Perfil
                 </li>
                 <li class="list-group-item d-flex align-items-center">
                     <i class="fa fa-bell me-2"></i> Notificaciones

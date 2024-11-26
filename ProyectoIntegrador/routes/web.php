@@ -9,6 +9,7 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\JuegoController;
 use App\Http\Controllers\ManualidadesController;
 use App\Http\Controllers\HistoriasController;
+use App\Http\Controllers\InfoUsuarioController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\ProgresoController;
 
@@ -16,6 +17,11 @@ use App\Http\Controllers\ProgresoController;
 Route::get('/progreso/actividades', [ProgresoController::class, 'activities'])->name('progreso.activities');
 Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index'); */
 
+//configuracion
+Route::get('/InfoUsuario', [InfoUsuarioController::class, 'index'])->name('informacionUsuario');
+
+
+Route::put('/usuarioUpdate/{id}', [InfoUsuarioController::class, 'update'])->name('ActualizarUsuario');
 //historias
 Route::get('/historias', [HistoriasController::class, 'index'])->name('historias.index');
 Route::post('/historias', [HistoriasController::class, 'store'])->name('historias.store');
