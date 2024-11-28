@@ -160,7 +160,7 @@
 
                 <!-- Botón de envío -->
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary btn-lg mt-4">Enviar respuestas</button>
+                    <button type="submit" class="btn btn-success btn-lg mt-4">Enviar respuestas</button>
                 </div>
             </form>
         </div>

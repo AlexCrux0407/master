@@ -19,14 +19,14 @@
             <span>Completa 10 actividades en total</span>
         </div>
         <div class="achievement col-md-4 mb-4 text-center p-4 bg-white shadow-sm rounded">
-            <i class="fas fa-star fa-4x mb-3 text-primary"></i>
+            <i class="fas fa-star fa-4x mb-3 text-success"></i>
             <p><strong>100 Puntos</strong></p>
             <span>Alcanza los 100 puntos acumulados</span>
         </div>
     </div>
 
     <div class="text-center mt-4">
-        <a href="{{ route('progreso') }}" class="btn btn-primary px-4 py-2">Volver al Progreso</a>
+        <a href="{{ route('progreso') }}" class="btn btn-success px-4 py-2">Volver al Progreso</a>
     </div>
 </div>
 

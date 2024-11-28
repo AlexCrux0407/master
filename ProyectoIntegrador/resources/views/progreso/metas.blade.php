@@ -40,7 +40,7 @@
     </div>
 
     <div class="text-center mt-4">
-        <a href="{{ route('progreso') }}" class="btn btn-primary px-4 py-2">Volver al Progreso</a>
+        <a href="{{ route('progreso') }}" class="btn btn-success px-4 py-2">Volver al Progreso</a>
     </div>
 </div>
 

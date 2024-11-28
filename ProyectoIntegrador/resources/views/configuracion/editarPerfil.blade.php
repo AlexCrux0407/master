@@ -29,7 +29,7 @@
 
                 <!-- Campo Nombre de Usuario -->
                 <div class="mb-4">
-                    <h2 class="text-center text-primary mb-4">Actualizar Información de Usuario</h2>
+                    <h2 class="text-center text-success mb-4">Actualizar Información de Usuario</h2>
                     <label for="nombreUsuario" class="form-label">Nuevo Nombre de Usuario</label>
                     <input type="text" class="form-control @error('nombreUsuario') is-invalid @enderror" id="nombreUsuario" name="nombreUsuario" value="{{ session('nombreUsuario') }}" required>
                     <div class="invalid-feedback">
@@ -41,7 +41,7 @@
                 </div>
 
                 <!-- Botón de Enviar -->
-                <button type="submit" class="btn btn-primary w-100" id="submitBtn">Actualizar</button>
+                <button type="submit" class="btn btn-success w-100" id="submitBtn">Actualizar</button>
             </form>
             
             <!-- Mostrar los valores actuales -->

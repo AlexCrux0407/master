@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container py-5 bg-light rounded-3 shadow-sm">
-    <h2 class="text-center mb-4 text-primary">Progreso</h2>
+    <h2 class="text-center mb-4 text-success">Progreso</h2>
 
     <!-- Lista de opciones con tarjetas -->
     <ul class="list-unstyled row row-cols-1 row-cols-md-2 g-4">
@@ -52,7 +52,7 @@
 
 
     <div class="text-center mt-4">
-        <a href="{{ route('index') }}" class="btn btn-primary btn-lg">Volver al Menú Principal</a>
+        <a href="{{ route('index') }}" class="btn btn-success btn-lg">Volver al Menú Principal</a>
     </div>
 </div>
 @endsection

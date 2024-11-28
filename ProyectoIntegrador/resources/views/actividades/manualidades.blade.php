@@ -5,9 +5,11 @@
 @section('content')
 
 <div class="container my-5">
-    <h2 class="text-center mb-4">Manualidades Reciclables</h2>
+   <div class=" bg-white">
+   <h2 class="text-center mb-4">Manualidades Reciclables</h2>
     <p class="text-center mb-5">Descubre cómo reutilizar materiales reciclables para crear objetos útiles y divertidos.</p>
 
+   </div>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         <!-- Alcancía con Botellas de Plástico -->
         <div class="col">
@@ -29,7 +31,7 @@
                         <li>Decora la botella con pintura y cinta adhesiva.</li>
                         <li>Asegúrate de que la tapa esté bien cerrada para mantener las monedas seguras.</li>
                     </ol>
-                    <a href="https://www.youtube.com/watch?v=75B8pGCk4Y4" class="btn btn-primary" target="_blank">Ver video del experimento</a>
+                    <a href="https://www.youtube.com/watch?v=75B8pGCk4Y4" class="btn btn-success" target="_blank">Ver video del experimento</a>
                 </div>
             </div>
         </div>
@@ -54,7 +56,7 @@
                         <li>Pinta la lata con el diseño de tu preferencia usando pintura en aerosol.</li>
                         <li>Llena la lata con tierra y planta tu planta favorita.</li>
                     </ol>
-                    <a href="https://www.youtube.com/watch?v=QRcBMVNE1z4" class="btn btn-primary" target="_blank">Ver video del experimento</a>
+                    <a href="https://www.youtube.com/watch?v=QRcBMVNE1z4" class="btn btn-success" target="_blank">Ver video del experimento</a>
                 </div>
             </div>
         </div>
@@ -80,14 +82,14 @@
                         <li>Pega el papel decorativo sobre el cartón para darle color.</li>
                         <li>Ensambla la estructura y coloca la luz LED en el interior.</li>
                     </ol>
-                    <a href="https://www.youtube.com/watch?v=GwujtQajDy4&list=PL8Z2847EZSQpoWoa7kWCnqUi_MAgP8OHw" class="btn btn-primary" target="_blank">Ver video del experimento</a>
+                    <a href="https://www.youtube.com/watch?v=GwujtQajDy4&list=PL8Z2847EZSQpoWoa7kWCnqUi_MAgP8OHw" class="btn btn-success" target="_blank">Ver video del experimento</a>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="text-center mt-4">
-        <a href="{{ route('actividades') }}" class="btn btn-secondary">Volver a Actividades</a>
+        <a href="{{ route('actividades') }}" class="btn btn-success">Volver a Actividades</a>
     </div>
 </div>
 

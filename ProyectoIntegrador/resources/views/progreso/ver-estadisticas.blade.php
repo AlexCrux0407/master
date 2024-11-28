@@ -10,7 +10,7 @@
     <!-- Progress Bar -->
     <div class="progress-container mb-4">
         <div class="progress-bar bg-light rounded">
-            <div class="progress bg-primary" style="width: 70%;"></div>
+            <div class="progress bg-success" style="width: 70%;"></div>
         </div>
         <p class="text-center mt-2"><i class="fas fa-chart-line"></i> <strong>70%</strong> Porcentaje completado</p>
     </div>
@@ -33,7 +33,7 @@
 
     <!-- Link to Progress Page -->
     <div class="text-center">
-        <a href="{{ route('progreso') }}" class="btn btn-primary px-4 py-2">Volver al Progreso</a>
+        <a href="{{ route('progreso') }}" class="btn btn-success px-4 py-2">Volver al Progreso</a>
     </div>
 </div>
 
