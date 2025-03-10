@@ -12,7 +12,7 @@ use App\Http\Controllers\HistoriasController;
 use App\Http\Controllers\InfoUsuarioController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\ProgresoController;
-use App\Http\Controllers\KhanAcademyController; 
+use App\Http\Controllers\TriviaController; 
 
 /* 
 Route::get('/progreso/actividades', [ProgresoController::class, 'activities'])->name('progreso.activities');
@@ -118,11 +118,9 @@ Route::get('/progreso', [ControladorVistas::class, 'progreso'])->name('progreso'
 Route::get('/configuracion', [ControladorVistas::class, 'configuracion'])->name('configuracion');
  */
 
-// Rutas para Khan Academy API
-Route::prefix('khan-academy')->group(function () {
-    Route::get('/topics', [KhanAcademyController::class, 'getTopics'])->name('khan.topics');
-    Route::get('/exercises', [KhanAcademyController::class, 'getExercises'])->name('khan.exercises');
-    Route::get('/videos/{videoId}', [KhanAcademyController::class, 'getVideos'])->name('khan.videos');
-    Route::get('/user-profile', [KhanAcademyController::class, 'getUserProfile'])->name('khan.user-profile');
-    Route::get('/embedded', [KhanAcademyController::class, 'getEmbeddedContent'])->name('khan.embedded');
+// Rutas para Open Trivia Database API
+Route::prefix('trivia')->group(function () {
+    Route::get('/', [TriviaController::class, 'index'])->name('trivia.index');
+    Route::get('/quiz', [TriviaController::class, 'generateQuiz'])->name('trivia.generate');
+    Route::post('/submit', [TriviaController::class, 'submitQuiz'])->name('trivia.submit');
 });

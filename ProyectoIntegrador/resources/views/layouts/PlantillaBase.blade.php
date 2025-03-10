@@ -97,7 +97,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('khan.embedded') }}">KHAN ACADEMY</a>
+                        <a class="nav-link" href="{{ route('trivia.index') }}">TRIVIA</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ route('index') }}">INICIO</a>
@@ -114,17 +114,7 @@
                 </ul>
             </div>
         </div>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="khanDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                KHAN ACADEMY
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="khanDropdown">
-                <li><a class="dropdown-item" href="{{ route('khan.topics') }}">Temas</a></li>
-                <li><a class="dropdown-item" href="{{ route('khan.exercises') }}">Ejercicios</a></li>
-                <li><a class="dropdown-item" href="{{ route('khan.user-profile') }}">Buscar Perfil</a></li>
-            </ul>
-        </li>
+
     </nav>
 
     <!-- Sidebar -->
