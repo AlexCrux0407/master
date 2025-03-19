@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->integer('points');
             $table->timestamp('completed_at')->useCurrent();
 
-            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->foreign('usuario_id')->references('id')->on('usuario')->onDelete('cascade');
         });
     }
 
