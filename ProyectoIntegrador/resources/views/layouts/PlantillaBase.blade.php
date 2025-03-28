@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 <html lang="es">
 
 <head>
@@ -183,3 +185,6 @@
 </body>
 
 </html>
+
+@include('chat_popup')
+
