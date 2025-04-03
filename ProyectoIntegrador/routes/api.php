@@ -1,22 +1,66 @@
 <?php
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use App\Models\Feedback;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\ActivitiesController;
+use App\Http\Controllers\API\UserProgressController;
+use App\Http\Controllers\API\RankingController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\FeedbackController;
 
-Route::post('/sentiment-analysis', function (Request $request) {
-    $comment = $request->input('comment');
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+*/
 
-    // Enviar a API de Python
-    $response = Http::post('http://127.0.0.1:5000/analyze', [
-        'text' => $comment
+// Ruta existente para análisis de sentimiento
+Route::post('/sentiment-analysis', [FeedbackController::class, 'store']);
+
+// API v1
+Route::prefix('v1')->group(function () {
+    // Rutas de autenticación
+    Route::post('/auth/register', [AuthController::class, 'register']);
+    Route::post('/auth/login', [AuthController::class, 'login']);
+
+    // Rutas públicas
+    Route::get('/activities', [ActivitiesController::class, 'index']);
+    Route::get('/activities/{id}', [ActivitiesController::class, 'show']);
+    Route::get('/activities/stats', [ActivitiesController::class, 'stats']);
+    
+    // Ranking público
+    Route::get('/ranking', [RankingController::class, 'index']);
+    Route::get('/ranking/top', [RankingController::class, 'getTopThree']);
+    
+    // Rutas protegidas (requieren autenticación)
+    Route::middleware('auth:sanctum')->group(function () {
+        // Auth
+        Route::post('/auth/logout', [AuthController::class, 'logout']);
+        Route::get('/auth/me', [AuthController::class, 'me']);
+        
+        // Ranking del usuario
+        Route::get('/ranking/me', [RankingController::class, 'getUserPosition']);
+        Route::get('/ranking/user/{userId}', [RankingController::class, 'getUserPosition']);
+        
+        // Actividades del usuario
+        Route::get('/user/activities', [UserProgressController::class, 'activities']);
+        Route::post('/user/activities/complete', [UserProgressController::class, 'completeActivity']);
+        
+        // Progreso del usuario
+        Route::get('/user/progress', [UserProgressController::class, 'getProgress']);
+        Route::get('/user/achievements', [UserProgressController::class, 'getAchievements']);
+    });
+});
+
+// Ruta para verificar que el usuario esté autenticado (debugging)
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+// Ruta de prueba
+Route::get('/test', function () {
+    return response()->json([
+        'success' => true,
+        'message' => 'API funcionando correctamente',
+        'timestamp' => now()->toDateTimeString()
     ]);
-
-    // Guardar resultado en base de datos
-    $sentiment = $response->json()['sentiment'];
-    Feedback::create([
-        'comment' => $comment,
-        'sentiment' => $sentiment
-    ]);
-
-    return response()->json(['status' => 'success', 'sentiment' => $sentiment]);
 });

@@ -30,7 +30,7 @@
 
         <div class="goal card shadow-sm mb-4">
             <div class="card-body">
-                <p><strong>Lograr 3 logros</strong></p>
+                <p><strong>Completar 3 logros</strong></p>
                 <div class="progress">
                     <div class="progress-bar bg-success" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">33%</div>
                 </div>

@@ -13,6 +13,9 @@ use App\Http\Controllers\InfoUsuarioController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\ProgresoController;
 use App\Http\Controllers\TriviaController; 
+use App\Http\Controllers\ApiDocsController; 
+use App\Http\Controllers\ApiTesterController; 
+
 use App\Models\Feedback;
 
 
@@ -79,10 +82,8 @@ Route::post('/sentiment-analysis', function (Request $request) {
 
 
 
-
-
-
-
+// Ruta para el probador de API
+Route::get('/api/test-ui', [ApiTesterController::class, 'index'])->name('api.test');
 
 /* 
 Route::get('/progreso/actividades', [ProgresoController::class, 'activities'])->name('progreso.activities');
@@ -160,7 +161,8 @@ Route::get('/actividades/manualidades', [ManualidadesController::class, 'index']
 }); */
 
 
-
+// Ruta para la documentación de la API
+Route::get('/api/docs', [ApiDocsController::class, 'index'])->name('api.docs');
 
 
 

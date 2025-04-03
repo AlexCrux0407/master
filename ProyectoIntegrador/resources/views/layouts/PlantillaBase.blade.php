@@ -46,7 +46,6 @@
 
         .sidebar.active {
             right: 0;
-            /* Aparece desde el lado derecho */
         }
 
         .overlay {

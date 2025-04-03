@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Usuario extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens;
 
     // Define el nombre de la tabla si no sigue la convención plural de Laravel
     protected $table = 'usuario';
@@ -28,9 +29,9 @@ class Usuario extends Authenticatable
 
     // Opcional: Configura la gestión de marcas de tiempo
     public $timestamps = true;
+    
     public function ranking()
     {
         return $this->hasOne(Ranking::class, 'usuario_id');
     }
-
 }
