@@ -35,7 +35,7 @@
         <div class="col-md-9">
             <!-- Contenido principal -->
             <div class="bg-white p-5 rounded shadow-sm">
-                <h1 class="text-success mb-4">Documentación de la API de EcoApp</h1>
+                <h1 class="text-success mb-4">Documentación de la API de EcoCardenal</h1>
                 
                 <section id="introduccion" class="mb-5">
                     <h2 class="mb-3">Introducción</h2>

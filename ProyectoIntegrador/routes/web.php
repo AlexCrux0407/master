@@ -196,3 +196,25 @@ Route::prefix('trivia')->group(function () {
     Route::get('/quiz', [TriviaController::class, 'generateQuiz'])->name('trivia.generate');
     Route::post('/submit', [TriviaController::class, 'submitQuiz'])->name('trivia.submit');
 });
+
+// Ruta de prueba para la API
+Route::get('/api/test', function () {
+    return response()->json([
+        'success' => true,
+        'message' => 'API funcionando correctamente',
+        'timestamp' => now()->toDateTimeString()
+    ]);
+});
+
+// Rutas API para testing
+Route::prefix('api/v1')->group(function () {
+    Route::post('/auth/register', [App\Http\Controllers\API\AuthController::class, 'register']);
+    Route::post('/auth/login', [App\Http\Controllers\API\AuthController::class, 'login']);
+    
+    // Rutas de actividades para testing
+    Route::get('/activities', [App\Http\Controllers\API\ActivitiesController::class, 'index']);
+    Route::get('/activities/stats', [App\Http\Controllers\API\ActivitiesController::class, 'stats']);
+    Route::get('/activities/{id}', [App\Http\Controllers\API\ActivitiesController::class, 'show']);
+    
+
+});

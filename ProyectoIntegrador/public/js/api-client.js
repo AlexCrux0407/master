@@ -1,7 +1,7 @@
 /**
- * Cliente JavaScript para consumir la API de EcoApp
+ * Cliente JavaScript para consumir la API de EcoCardenal
  */
-class EcoAppApiClient {
+class EcoCardenalApiClient {
     constructor(baseUrl = '/api/v1') {
         this.baseUrl = baseUrl;
         this.token = localStorage.getItem('eco_app_token') || null;
@@ -36,6 +36,12 @@ class EcoAppApiClient {
             'Accept': 'application/json',
             'X-Requested-With': 'XMLHttpRequest'
         };
+        
+        // Intentar obtener el token CSRF si está disponible
+        const csrfToken = document.querySelector('meta[name="csrf-token"]');
+        if (csrfToken) {
+            headers['X-CSRF-TOKEN'] = csrfToken.getAttribute('content');
+        }
         
         // Agregar token de autenticación si existe
         if (this.token) {
@@ -209,5 +215,5 @@ class EcoAppApiClient {
 
 // Exportar para uso en módulos
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = EcoAppApiClient;
+    module.exports = EcoCardenalApiClient;
 }
