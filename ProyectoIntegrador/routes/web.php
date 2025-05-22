@@ -13,6 +13,8 @@ use App\Http\Controllers\InfoUsuarioController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\ProgresoController;
 use App\Http\Controllers\TriviaController; 
+use App\Http\Controllers\AtencionClienteController;
+use App\Http\Controllers\FaqController;
 
 /* 
 Route::get('/progreso/actividades', [ProgresoController::class, 'activities'])->name('progreso.activities');
@@ -28,6 +30,10 @@ Route::get('/historias', [HistoriasController::class, 'index'])->name('historias
 Route::post('/historias', [HistoriasController::class, 'store'])->name('historias.store');
 Route::delete('/historias/{id}', [HistoriasController::class, 'destroy'])->name('historias.destroy');
 
+//ERP atencion al cliente
+Route::get('/atencion-cliente', [AtencionClienteController::class, 'index'])->name('atencion.cliente');
+Route::post('/atencion-cliente/enviar', [AtencionClienteController::class, 'enviar'])->name('atencion.cliente.enviar');
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 
 
