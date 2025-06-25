@@ -14,6 +14,7 @@ use App\Http\Controllers\RankingController;
 use App\Http\Controllers\ProgresoController;
 use App\Http\Controllers\TriviaController; 
 use App\Http\Controllers\AtencionClienteController;
+use App\Http\Controllers\MensajeAtencionClienteController;
 use App\Http\Controllers\FaqController;
 
 /* 
@@ -35,7 +36,9 @@ Route::get('/atencion-cliente', [AtencionClienteController::class, 'index'])->na
 Route::post('/atencion-cliente/enviar', [AtencionClienteController::class, 'enviar'])->name('atencion.cliente.enviar');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
-
+//Atencion a cliente
+Route::post('/mensajes-atencion', [MensajeAtencionClienteController::class, 'store'])
+     ->name('mensajes-atencion.store');
 
 Route::get('/', [ControladorVistas::class, 'index'])->name('index');
 

@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'clickup' => [
+    'api_key' => env('CLICKUP_API_KEY'),
+    'list_id' => env('CLICKUP_LIST_ID'),
+    ],
+
+
 ];

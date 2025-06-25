@@ -12,8 +12,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
     <style>
         /* Estilos para el navbar */
         nav {
@@ -140,6 +140,9 @@
                 <li class="list-group-item d-flex align-items-center">
                     <i class="fa fa-info-circle me-2"></i> Información de la Cuenta
                 </li>
+                <li class="list-group-item d-flex align-items-center" onclick="toggleChatBot()">
+                    <i class="fa fa-headset me-2"></i> ChatBot verde
+                </li>
                 <li class="list-group-item d-flex align-items-center">
                     <a href="{{ route('atencion.cliente') }}" class="list-group-item d-flex align-items-center">
                         <i class="fa fa-headset me-2"></i> Atención al Cliente
@@ -151,6 +154,28 @@
                     </a>
                 </li>
             </ul>
+        </div>
+    </div>
+
+    <!-- Bot Verde - Chat de Atención al Cliente -->
+    <div id="chatBot" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1051; display: none;">
+        <div class="card shadow" style="width: 350px;">
+            <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                <span><i class="fa fa-headset me-2"></i>Bot Verde</span>
+                <button class="btn btn-sm btn-light" onclick="toggleChatBot()"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="card-body" style="height: 300px; overflow-y: auto;" id="chat-messages">
+                <div class="text-muted text-center">Hola, ¿en qué puedo ayudarte hoy?</div>
+            </div>
+            <div class="card-footer">
+                <form id="chat-form" onsubmit="sendMessage(event)">
+                    <div class="input-group">
+                        <input type="text" id="userInput" class="form-control" placeholder="Escribe tu mensaje..."
+                            required>
+                        <button class="btn btn-success" type="submit"><i class="fa fa-paper-plane"></i></button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -188,6 +213,40 @@
                 item.classList.add('active');
             });
         });
+
+        // Bot Verde - Chat
+        function toggleChatBot() {
+            const bot = document.getElementById('chatBot');
+            bot.style.display = (bot.style.display === 'none') ? 'block' : 'none';
+        }
+
+        function sendMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatBox = document.getElementById('chat-messages');
+
+            // Mostrar el mensaje del usuario
+            const userMsg = document.createElement('div');
+            userMsg.className = 'text-end mb-2';
+            userMsg.innerHTML = `<span class="badge bg-success">${message}</span>`;
+            chatBox.appendChild(userMsg);
+
+            // Limpiar input
+            input.value = '';
+
+            // Respuesta automática (simulada)
+            const response = document.createElement('div');
+            response.className = 'text-start mb-2';
+            setTimeout(() => {
+                response.innerHTML =
+                    `<span class="badge bg-light text-dark">Gracias por tu mensaje. Pronto un agente te atenderá.</span>`;
+                chatBox.appendChild(response);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 500);
+        }
     </script>
 
 </body>

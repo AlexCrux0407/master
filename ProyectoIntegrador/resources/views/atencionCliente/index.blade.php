@@ -29,7 +29,7 @@
         <div class="card-body">
             <h5 class="card-title text-success">Formulario de Contacto</h5>
 
-            <form action="{{ route('atencion.cliente.enviar') }}" method="POST">
+            <form action="{{ route('mensajes-atencion.store') }}" method="POST">
                 @csrf
 
                 {{-- Motivo --}}

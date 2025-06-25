@@ -34,7 +34,7 @@
             </h2>
             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
                 <div class="accordion-body">
-                    Ingresa con tu cuenta, ve al menú "Juegos Ecológicos" y elige una actividad. ¡Recuerda recolectar eco-puntos!
+                    Ingresa con tu cuenta, ve al menú "Actividades" y elige la actividad "Juega un Juego". ¡Recuerda recolectar eco-puntos!
                 </div>
             </div>
         </div>
