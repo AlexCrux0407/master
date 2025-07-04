@@ -31,18 +31,43 @@ class RegistroController extends Controller
      */
     public function store(ValidadorRegistro $request)
     {
-        DB::table('usuario')->insert([
+        // Determinar el rol basado en el dominio del correo
+        $rol = $this->determinarRol($request->input('correo'));
+
+        DB::table('usuarios')->insert([
             "nombreUsuario"=>$request->input('nombreUsuario'),
             "nombre"=>$request->input('txtnombre'),
             "apellido"=>$request->input('txtapellido'),
             "correo"=>$request->input('correo'),
             "password" =>Hash::make($request->input('password')),
+            "rol" => $rol,
             "created_at"=>Carbon::now(),
             "updated_at"=>Carbon::now()
         ]);
+
         $usuario=$request->input('txtnombre');
-        session()->flash('exito','se guardo el usuario'.$usuario);
+        session()->flash('exito','Se guardó el usuario '.$usuario.' con rol: '.$rol);
         return to_route('login');
+    }
+
+    /**
+     * Determinar el rol del usuario basado en el dominio del correo
+     */
+    private function determinarRol($correo)
+    {
+        $dominio = substr(strrchr($correo, "@"), 1);
+        
+        switch ($dominio) {
+            case 'alumno':
+                return 'alumno';
+            case 'docente':
+            case 'padre':
+                return 'gestor';
+            case 'admin':
+                return 'admin';
+            default:
+                return 'alumno';
+        }
     }
 
     /**

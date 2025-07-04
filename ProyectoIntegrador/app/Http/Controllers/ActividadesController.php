@@ -10,5 +10,10 @@ class ActividadesController extends Controller
     {
         
         return view('actividades.actividades');
+    
+
+
+
     }
 }
+

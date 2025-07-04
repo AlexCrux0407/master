@@ -84,9 +84,9 @@ class TriviaController extends Controller
         }
     }
     
-    /**
-     * Procesar los resultados del quiz
-     */
+    
+     // Procesar los resultados del quiz
+     
     public function submitQuiz(Request $request)
     {
         $questions = session('current_quiz');

@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-   
+
 </head>
+
 <body>
     <div class="login-container">
         @if(session('exito'))
@@ -27,26 +29,40 @@
         @endif
 
         <h2>Iniciar Sesión</h2>
-        
+
         <div class="login-image" id="loginImage">
             <img src="{{ asset('images/default-user.png') }}" alt="Imagen inicial">
         </div>
 
         <form method="POST" action="{{ route('iniciar') }}">
             @csrf
-            <input type="text" name="username" placeholder="Nombre de usuario" id="usernameInput">
+            <!-- Debug: mostrar la URL generada -->
+            <small class="text-info">Debug - Acción del formulario: {{ route('iniciar') }}</small>
+            
+            <input type="text" name="username" placeholder="Nombre de usuario" id="usernameInput" required>
             <small class="fst-italic text-danger">{{ $errors->first('username') }}</small>
 
-            <input type="password" name="password" placeholder="Contraseña" id="passwordInput">
+            <input type="password" name="password" placeholder="Contraseña" id="passwordInput" required>
             <small class="fst-italic text-danger">{{ $errors->first('password') }}</small>
 
-            <button type="submit">Iniciar Sesión</button>
+            <button type="submit" onclick="console.log('Formulario enviado')">Iniciar Sesión</button>
 
             @if($errors->has('login'))
                 <p class="fst-italic text-danger">{{ $errors->first('login') }}</p>
             @endif
+
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <strong>Debug - Errores encontrados:</strong>
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </form>
-        
+
         <a href="{{ route('registrar') }}">Crear una cuenta</a>
     </div>
 
@@ -72,6 +88,17 @@
         passwordInput.addEventListener('blur', () => {
             loginImage.src = "{{ asset('images/default-user.png') }}";
         });
+        document.querySelector('form').addEventListener('submit', function (e) {
+            console.log('Formulario enviándose...');
+            console.log('Username:', document.querySelector('[name="username"]').value);
+            console.log('Password length:', document.querySelector('[name="password"]').value.length);
+            console.log('Action:', this.action);
+            console.log('Method:', this.method);
+            
+            // Prevenir el envío por ahora para debug
+            // e.preventDefault();
+        });
     </script>
 </body>
+
 </html>

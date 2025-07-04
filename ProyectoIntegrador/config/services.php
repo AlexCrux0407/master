@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Third Party Services
@@ -35,4 +34,7 @@ return [
         ],
     ],
 
+    'google' => [
+        'vision_api_key' => env('GOOGLE_VISION_API_KEY'),
+    ],
 ];
