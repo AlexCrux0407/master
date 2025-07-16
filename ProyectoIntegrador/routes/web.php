@@ -16,6 +16,7 @@ use App\Http\Controllers\TriviaController;
 use App\Http\Controllers\AtencionClienteController;
 use App\Http\Controllers\MensajeAtencionClienteController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\LandingController;
 
 /* 
 Route::get('/progreso/actividades', [ProgresoController::class, 'activities'])->name('progreso.activities');
@@ -83,6 +84,9 @@ Route::post('/actividades/quiz/result', [QuizController::class, 'result'])->name
 
 Route::get('/actividades/juego', [JuegoController::class, 'index'])->name('juego.index');
 Route::get('/actividades/manualidades', [ManualidadesController::class, 'index'])->name('manualidades.index');
+
+//Ruta Landing Page
+Route::get('/landing', [LandingController::class, 'index'])->name('landing');
 
 /* Route::middleware(['auth'])->group(function () {
     Route::get('/actividades/quiz', [QuizController::class, 'index'])->name('quiz.index');
